@@ -29,4 +29,33 @@
     <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerSize">16dp</item>
     </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog2" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/green3</item>
+        <item name="colorSecondary">@color/green3</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.App</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
+    </style>
+
+
+    <style name="MaterialAlertDialog.App" parent="MaterialAlertDialog.Material3">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceOverlay">@null</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/green3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.App.Button.Positive" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Widget.App.Button.Negative" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
