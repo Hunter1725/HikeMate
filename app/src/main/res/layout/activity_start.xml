@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity"
     android:fitsSystemWindows="true"
-    android:background="@drawable/bg_hike">
+    android:background="@drawable/bg1">
 
 
     <com.google.android.material.imageview.ShapeableImageView
