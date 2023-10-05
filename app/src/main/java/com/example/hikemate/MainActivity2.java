@@ -14,5 +14,6 @@ public class MainActivity2 extends AppCompatActivity {
 
         //Hello my friends
         //Hejqjeqeqweqweqweqe
+        //Tụi tao là 8 a 4
     }
 }
