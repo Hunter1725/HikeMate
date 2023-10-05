@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartActivity"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg_hike">
 
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -17,8 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="62dp"
+        android:padding="5dp"
         android:contentDescription="Logo"
-        style="@style/CircleShapeImageView2"/>
+        android:background="@color/white"
+        style="@style/CircleShapeImageView2"
+        android:elevation="45dp"/>
 
     <TextView
         android:id="@+id/hello"
@@ -26,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="HikeMate"
-        android:textColor="@color/green4"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +44,8 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:text="Where Every Step Counts - Your Trail to Adventure!"
-        android:textColor="@color/green4"
-        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +71,7 @@
                 android:layout_centerVertical="true"
                 android:layout_margin="8dp"
                 style="@style/Widget.App.CardView"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:checkable="true"
@@ -79,17 +83,19 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        >
 
                         <!-- Title, secondary and supporting text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="English"
-                            android:textColor="@color/green4"
+                            android:textColor="@color/black"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textAppearance="?attr/textAppearanceTitleMedium"
@@ -99,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Farming in your language"
-                            android:textColor="@color/green4"
+                            android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             />
@@ -120,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_margin="8dp"
-                app:strokeWidth="2dp"
+                app:strokeWidth="4dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:checkable="true"
@@ -136,14 +142,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        >
 
                         <!-- Title, secondary and supporting text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tiếng Việt"
-                            android:textColor="@color/green4"
+                            android:textColor="@color/black"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textAppearance="?attr/textAppearanceTitleMedium"
@@ -153,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="Trồng trọt bằng ngôn ngữ của bạn"
-                            android:textColor="@color/green4"
+                            android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textAppearance="?attr/textAppearanceBodyMedium"
                             />
@@ -170,21 +177,22 @@
 
 
     <Button
-        style="@style/Widget.Material3.Button.ElevatedButton"
         android:id="@+id/btnAccept"
+        style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_marginStart="92dp"
         android:layout_marginEnd="92dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/green4"
         android:text="Accept"
-        android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/layoutTerm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/layoutTerm" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/layoutTerm"
@@ -203,9 +211,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I read and accept the terms of use and the privacy policy"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:gravity="center"
-            android:textStyle="" />
+            android:textStyle=""
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
