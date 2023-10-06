@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello_world">Xin chào các bạn!</string>
+    <string name="start_fragment1">Nhập Chi Tiết Chuyến Đi Hiking Toàn Diện</string>
+    <string name="start_fragment2">Quản Lý Dữ Liệu Hiệu Quả</string>
+    <string name="start_fragment3">Ghi Chú Chi Tiết Về Chuyến Hiking</string>
+    <string name="start_fragment4">Tính Năng Tìm Kiếm Nâng Cao</string>
 </resources>

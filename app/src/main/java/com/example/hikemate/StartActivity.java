@@ -31,10 +31,10 @@ public class StartActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_start);
         initView();
-        if (db.settingDao().getSetting() != null) {
-            startActivity(new Intent(StartActivity.this, MainActivity.class));
-            finish();
-        }
+//        if (db.settingDao().getSetting() != null) {
+//            startActivity(new Intent(StartActivity.this, GettingStartedActivity.class));
+//            finish();
+//        }
         initListener();
     }
 
@@ -66,7 +66,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.settingDao().insert(new Setting(langCode,true));
-                startActivity(new Intent(StartActivity.this, MainActivity.class));
+                startActivity(new Intent(StartActivity.this, GettingStartedActivity.class));
             }
         });
     }

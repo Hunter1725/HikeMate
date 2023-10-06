@@ -13,6 +13,9 @@
         android:theme="@style/Theme.HikeMate"
         tools:targetApi="31">
         <activity
+            android:name=".GettingStartedActivity"
+            android:exported="true" />
+        <activity
             android:name=".StartActivity"
             android:exported="true">
             <intent-filter>
@@ -20,11 +23,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>
