@@ -6,15 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.hikemate.Database.HikeDatabase;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Locale;
 
@@ -24,11 +26,11 @@ public class GettingStartedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_started);
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
-        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
+        FragmentStateAdapter pagerAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
-            public Fragment getItem(int position) {
+            public Fragment createFragment(int position) {
                 // Return the appropriate fragment for the given position
                 switch (position) {
                     case 0:
@@ -45,29 +47,25 @@ public class GettingStartedActivity extends AppCompatActivity {
             }
 
             @Override
-            public int getCount() {
+            public int getItemCount() {
                 return 4; // Number of fragments
             }
         };
 
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-            if (tab != null) {
-                tab.setCustomView(R.layout.getting_started_custom_tab);
-            }
-        }
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            View customTabView = LayoutInflater.from(this).inflate(R.layout.getting_started_custom_tab, null);
+            tab.setCustomView(customTabView);
+        }).attach();
 
         Button nextButton = findViewById(R.id.nextButton);
         Button prevButton = findViewById(R.id.prevButton);
         Button okButton = findViewById(R.id.okButton);
 
-        final int lastTabPosition = pagerAdapter.getCount() - 1;
+        final int lastTabPosition = pagerAdapter.getItemCount() - 1;
 
-// Set initial visibility for "OK" button and "Next/Previous" buttons
+        // Set initial visibility for "OK" button and "Next/Previous" buttons
         if (viewPager.getCurrentItem() == lastTabPosition) {
             nextButton.setVisibility(View.GONE);
             prevButton.setVisibility(View.GONE);
@@ -109,12 +107,8 @@ public class GettingStartedActivity extends AppCompatActivity {
             }
         });
 
-// Add a ViewPager change listener to handle button visibility
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+        // Add a ViewPager change listener to handle button visibility
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 // Update button visibility based on the current fragment
@@ -128,14 +122,8 @@ public class GettingStartedActivity extends AppCompatActivity {
                     okButton.setVisibility(View.GONE);
                 }
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
         });
-
     }
-
 
     @Override
     protected void attachBaseContext(Context newBase) {
