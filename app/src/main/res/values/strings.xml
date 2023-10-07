@@ -8,5 +8,6 @@
     <string name="getting_started">Getting Started</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
-
+    <string name="drawer_open" translatable="false">drawer_open</string>
+    <string name="drawer_close" translatable="false">drawer_close</string>
 </resources>

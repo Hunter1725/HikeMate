@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/planning_items"
+            android:title="Planning">
+            <menu>
+                <item
+                    android:id="@+id/allPlan"
+                    android:title="All plan"
+                    android:icon="@drawable/plan"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/newPlan"
+                    android:title="New plan"
+                    android:icon="@drawable/new_plan"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/calculating"
+            android:title="Calculating">
+            <menu>
+                <item
+                    android:id="@+id/pesticide"
+                    android:icon="@drawable/chat"
+                    android:title="Pesticide"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/fertilizer"
+                    android:icon="@drawable/home"
+                    android:title="Fertilizer"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+            </menu>
+        </item>
+
+    </group>
+
+</menu>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.imageview.ShapeableImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/miniAvatar"
+    android:layout_width="54dp"
+    android:layout_height="54dp"
+    style="@style/CircleShapeImageView"
+    app:srcCompat="@drawable/logo_hike"
+    android:background="@color/white"
+    android:padding="10dp" />
