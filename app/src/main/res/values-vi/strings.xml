@@ -5,4 +5,7 @@
     <string name="start_fragment2">Quản Lý Dữ Liệu Hiệu Quả</string>
     <string name="start_fragment3">Ghi Chú Chi Tiết Về Chuyến Hiking</string>
     <string name="start_fragment4">Tính Năng Tìm Kiếm Nâng Cao</string>
+    <string name="getting_started">Bắt đầu</string>
+    <string name="previous">Trở về</string>
+    <string name="next">Tiếp tục</string>
 </resources>

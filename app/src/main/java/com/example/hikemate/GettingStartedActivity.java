@@ -3,6 +3,7 @@ package com.example.hikemate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.hikemate.Database.HikeDatabase;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Locale;
 
 public class GettingStartedActivity extends AppCompatActivity {
     @Override
@@ -129,5 +134,18 @@ public class GettingStartedActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        HikeDatabase db = HikeDatabase.getInstance(this);
+        String lng = db.settingDao().getSetting().getLanguage();
+        Locale locale;
+        locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Context context = ContextWrapper.wrap(newBase, locale);
+        super.attachBaseContext(context);
     }
 }

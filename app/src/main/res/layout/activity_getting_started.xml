@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:paddingBottom="5dp"
-            android:text="Getting Started"
+            android:text="@string/getting_started"
             android:textColor="@color/green6"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -80,7 +80,7 @@
                 android:id="@+id/prevButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Previous"
+                android:text="@string/previous"
                 android:layout_marginEnd="50dp"/>
 
             <Button
@@ -88,7 +88,7 @@
                 android:id="@+id/nextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next" />
+                android:text="@string/next" />
 
         </LinearLayout>
     </LinearLayout>

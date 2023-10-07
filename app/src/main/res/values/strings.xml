@@ -5,5 +5,8 @@
     <string name="start_fragment2">Efficient Database Management</string>
     <string name="start_fragment3">Detailed Hike Observations</string>
     <string name="start_fragment4">Advanced Search Functionality</string>
+    <string name="getting_started">Getting Started</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 
 </resources>
