@@ -31,10 +31,10 @@ public class StartActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_start);
         initView();
-//        if (db.settingDao().getSetting() != null) {
-//            startActivity(new Intent(StartActivity.this, GettingStartedActivity.class));
-//            finish();
-//        }
+        if (db.settingDao().getSetting() != null) {
+            startActivity(new Intent(StartActivity.this, GettingStartedActivity.class));
+            finish();
+        }
         initListener();
     }
 

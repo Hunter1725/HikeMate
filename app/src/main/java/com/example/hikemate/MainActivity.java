@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                // Set checked state for the selected item
+                item.setChecked(true);
+
+                // Close the drawer
+                drawer.closeDrawers();
                 return false;
             }
         });

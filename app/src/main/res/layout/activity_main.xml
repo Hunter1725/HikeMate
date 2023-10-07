@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 app:liftOnScroll="true"
                 android:fitsSystemWindows="true"
-                android:background="@color/green1">
+                android:background="@color/primary">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
@@ -38,7 +38,7 @@
                     app:titleCentered="true"
                     app:navigationIcon="@drawable/menu"
                     app:menu="@menu/top_app_bar"
-                    android:background="@color/green1"
+                    android:background="@color/primary"
                     android:paddingEnd="8dp"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
                     android:fitsSystemWindows="true" />
@@ -67,9 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:menu="@menu/bottom_navigation_menu"
-            style="@style/Widget.App.NavigationView"
             app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-            android:background="@color/green1"/>
+            android:background="@color/primary"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabScrollToTop"
@@ -80,7 +79,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
             android:src="@drawable/up"
-            app:backgroundTint="@color/green1"
+            app:backgroundTint="@color/primary"
             app:elevation="6dp"
             android:contentDescription="FAB up" />
 
@@ -93,8 +92,9 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/navigation_drawer_menu"
-        android:backgroundTint="@color/green1"
-        android:layout_marginTop="30dp"/>
+        android:backgroundTint="@color/primary"
+        android:layout_marginTop="35dp"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
