@@ -43,9 +43,9 @@
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="center"
-            style="@style/CustomTabLayout"/>
+            style="@style/CustomTabLayout" />
 
 
 
