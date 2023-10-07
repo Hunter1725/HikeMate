@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
@@ -93,5 +95,19 @@ public class MainActivity extends AppCompatActivity {
                     .setNegativeButton("No", null)
                     .show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_app_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem avatarItem = toolbar.getMenu().findItem(R.id.miniAvatar);
+        avatarItem.setActionView(R.layout.menu_item_avatar);
+        return super.onPrepareOptionsMenu(menu);
     }
 }
