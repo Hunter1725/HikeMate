@@ -44,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 cardView.setChecked(true);
                 cardView2.setChecked(false);
-                select.setText("Where Every Step Counts - Your Trail to Adventure!");
+                select.setText("Explore Nature's Wonders - Enhance Your Health!");
                 btnAccept.setText("Accept");
                 haveReadPrivacyAndTerms.setText("I read and accept the terms of use and the privacy policy");
                 langCode = "en";
@@ -56,7 +56,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 cardView.setChecked(false);
                 cardView2.setChecked(true);
-                select.setText("Mỗi bước đi đều quan trọng - Hành trình của bạn đến với cuộc phiêu lưu!");
+                select.setText("Khám phá kì quan thiên nhiên - Cải thiện sức khoẻ");
                 btnAccept.setText("Chấp nhận");
                 haveReadPrivacyAndTerms.setText("Tôi đã đọc và chấp nhận các điều khoản sử dụng và chính sách quyền riêng tư");
                 langCode = "vi";
