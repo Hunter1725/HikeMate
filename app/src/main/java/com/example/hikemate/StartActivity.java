@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
 
     private MaterialCardView cardView, cardView2;
     private HikeDatabase db;
-    private String langCode;
+    private String langCode = "en";
     private Setting setting;
     private TextView select,haveReadPrivacyAndTerms;
     private Button btnAccept;

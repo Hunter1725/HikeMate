@@ -28,7 +28,12 @@
     <style name="CircleShapeImageView2">
         <item name="shapeAppearanceOverlay">@style/CircleShapeOverlay2</item>
         <item name="strokeWidth">3dp</item>
-        <item name="strokeColor">@color/green3</item>
+        <item name="strokeColor">@color/green6</item>
+    </style>
+
+    <style name="RoundedImageViewShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
     </style>
 
     <style name="CircleShapeOverlay2">

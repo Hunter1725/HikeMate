@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:text="Animals and plants"
+        android:layout_marginBottom="15dp"/>
+    <!-- MaterialCardView 1 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/primary"
+            android:visibility="gone">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image1"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/animal_class_1"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedImageViewShape"/>
+
+            <TextView
+                android:id="@+id/name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Animal classification"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Animals are multicellular, eukaryotic organisms in the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, have myocytes and are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. "
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:backgroundTint="@color/green6"
+                android:id="@+id/button1"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="More Details"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/primary"
+            android:visibility="gone">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image2"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/plant_class_1"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedImageViewShape"/>
+
+            <TextView
+                android:id="@+id/name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plant classification"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Plant, (kingdom Plantae), any multicellular eukaryotic life-form characterized by (1) photosynthetic nutrition (a characteristic possessed by all plants except some parasitic plants and underground orchids), in which chemical energy is produced from water, minerals, and carbon dioxide with the aid of pigments and the radiant energy."
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/button2"
+                android:backgroundTint="@color/green6"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="More details"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/primary"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image3"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:src="@drawable/plant_class_1"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedImageViewShape"/>
+
+            <TextView
+                android:id="@+id/name3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Survival skills"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Before talking about those fancy basic hiking skills, let’s start with the basics first. The general rule: never ever attempt a new hike without proper research and planning. You know how dangerous it is because it is so risky and there are so many uncertainties in the forest or mountain."
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/button3"
+                android:backgroundTint="@color/green6"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="More details"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

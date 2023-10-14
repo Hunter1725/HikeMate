@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private HikeDatabase db;
     private NestedScrollView nestedScrollView;
 
+    private Button testButton, anotherTestButton, skillTestButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,33 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         initListener();
+
+//        skillTestButton =findViewById(R.id.skillTest);
+//        testButton = findViewById(R.id.test);
+//        anotherTestButton = findViewById(R.id.anotherTest);
+//        testButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, AnimalList.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        anotherTestButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, PlantList.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        skillTestButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SkillList.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void initListener() {
