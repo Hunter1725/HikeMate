@@ -5,13 +5,19 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
+import androidx.room.TypeConverters;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.hikemate.Converter.BitmapConverter;
+import com.example.hikemate.Database.Dao.HikeDao;
+import com.example.hikemate.Database.Dao.HikeImageDao;
 import com.example.hikemate.Database.Dao.MessageDao;
 import com.example.hikemate.Database.Dao.AnimalDao;
 import com.example.hikemate.Database.Dao.PlantDao;
 import com.example.hikemate.Database.Dao.SettingDao;
+import com.example.hikemate.Database.Model.Hike;
+import com.example.hikemate.Database.Model.HikeImage;
 import com.example.hikemate.Database.Dao.WeatherDao;
 import com.example.hikemate.Database.Model.Message;
 import com.example.hikemate.Database.Dao.SkillDao;
@@ -20,14 +26,20 @@ import com.example.hikemate.Database.Model.Plant;
 import com.example.hikemate.Database.Model.Setting;
 import com.example.hikemate.Database.Model.Weather;
 import com.example.hikemate.Database.Model.Skill;
-
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+@TypeConverters(BitmapConverter.class)
 
-@Database(entities = {Setting.class, Weather.class, Message.class, Animal.class, Plant.class, Skill.class}, version = 1)
+
+
+@Database(entities = {Setting.class, Weather.class, Message.class, Animal.class, Plant.class, Skill.class, Hike.class, HikeImage.class}, version = 1)
 public abstract class HikeDatabase extends androidx.room.RoomDatabase {
     public abstract SettingDao settingDao();
+
+    public abstract HikeDao hikeDao();
+
+    public abstract HikeImageDao hikeImageDao();
     public abstract WeatherDao weatherDao();
     public abstract MessageDao messageDao();
     public abstract AnimalDao animalDao();

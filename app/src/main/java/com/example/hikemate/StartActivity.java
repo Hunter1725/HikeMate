@@ -10,8 +10,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Setting;
+import com.example.hikemate.Hike.HikeActivity;
 import com.google.android.material.card.MaterialCardView;
 
 public class StartActivity extends AppCompatActivity {

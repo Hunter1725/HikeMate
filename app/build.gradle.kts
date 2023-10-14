@@ -51,6 +51,20 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
+    val activity_version = "1.7.2"
+    // Java language implementation
+    //noinspection GradleDependency
+    implementation("androidx.activity:activity:$activity_version")
+
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
     //Gson
     implementation ("com.google.code.gson:gson:2.10.1")
 

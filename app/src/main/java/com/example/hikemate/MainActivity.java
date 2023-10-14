@@ -18,12 +18,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
+import com.example.hikemate.Hike.HikeActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -48,42 +52,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         initView();
 
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         initListener();
-
-//        skillTestButton =findViewById(R.id.skillTest);
-//        testButton = findViewById(R.id.test);
-//        anotherTestButton = findViewById(R.id.anotherTest);
-//        testButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, AnimalList.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        anotherTestButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, PlantList.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        skillTestButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, SkillList.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     private void initListener() {
@@ -119,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
                 if (itemId == R.id.homeBottom) {
                     replaceFragment(new MainFragment());
-                } else if (itemId == R.id.chat) {
+                } else if(itemId == R.id.hikeBottom) {
+                    startActivity(new Intent(MainActivity.this, HikeActivity.class));
+                }else if (itemId == R.id.chat) {
                     startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 }
                 return true;
@@ -193,4 +173,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
         nestedScrollView.smoothScrollTo(0, 0);
     }
+
 }

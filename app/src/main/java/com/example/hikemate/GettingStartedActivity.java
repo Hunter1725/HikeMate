@@ -21,12 +21,17 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Locale;
 
 public class GettingStartedActivity extends AppCompatActivity {
+    private HikeDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_started);
 
+
         ViewPager2 viewPager = findViewById(R.id.viewPager);
+
+        db = HikeDatabase.getInstance(this);
+
         FragmentStateAdapter pagerAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
@@ -60,7 +65,7 @@ public class GettingStartedActivity extends AppCompatActivity {
         }).attach();
 
         Button nextButton = findViewById(R.id.nextButton);
-        Button prevButton = findViewById(R.id.prevButton);
+        Button skipButton = findViewById(R.id.skipButton);
         Button okButton = findViewById(R.id.okButton);
 
         final int lastTabPosition = pagerAdapter.getItemCount() - 1;
@@ -68,11 +73,11 @@ public class GettingStartedActivity extends AppCompatActivity {
         // Set initial visibility for "OK" button and "Next/Previous" buttons
         if (viewPager.getCurrentItem() == lastTabPosition) {
             nextButton.setVisibility(View.GONE);
-            prevButton.setVisibility(View.GONE);
+            skipButton.setVisibility(View.GONE);
             okButton.setVisibility(View.VISIBLE);
         } else {
             nextButton.setVisibility(View.VISIBLE);
-            prevButton.setVisibility(View.VISIBLE);
+            skipButton.setVisibility(View.VISIBLE);
             okButton.setVisibility(View.GONE);
         }
 
@@ -84,18 +89,15 @@ public class GettingStartedActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(currentItem + 1);
                 } else if (currentItem == lastTabPosition) {
                     // This is Fragment 4 (last fragment)
-                    // You can handle any specific action for this fragment here
                 }
             }
         });
 
-        prevButton.setOnClickListener(new View.OnClickListener() {
+        skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentItem = viewPager.getCurrentItem();
-                if (currentItem > 0) {
-                    viewPager.setCurrentItem(currentItem - 1);
-                }
+                // Launch the new activity when "OK" button is clicked
+                startActivity(new Intent(GettingStartedActivity.this, MainActivity.class));
             }
         });
 
@@ -114,11 +116,11 @@ public class GettingStartedActivity extends AppCompatActivity {
                 // Update button visibility based on the current fragment
                 if (position == lastTabPosition) {
                     nextButton.setVisibility(View.GONE);
-                    prevButton.setVisibility(View.GONE);
+                    skipButton.setVisibility(View.GONE);
                     okButton.setVisibility(View.VISIBLE);
                 } else {
                     nextButton.setVisibility(View.VISIBLE);
-                    prevButton.setVisibility(View.VISIBLE);
+                    skipButton.setVisibility(View.VISIBLE);
                     okButton.setVisibility(View.GONE);
                 }
             }

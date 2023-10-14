@@ -182,5 +182,9 @@ public class MainFragment extends Fragment implements NetworkUtils.OnConnectivit
         networkUtils.unregister();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        initWeatherForecast();
+    }
 }

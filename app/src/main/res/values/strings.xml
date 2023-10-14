@@ -10,6 +10,34 @@
     <string name="next">Next</string>
     <string name="drawer_open" translatable="false">drawer_open</string>
     <string name="drawer_close" translatable="false">drawer_close</string>
+    <string name="skip">Skip</string>
+    <string name="name_of_hike">Name of Hike</string>
+    <string name="length_of_hike">Length of Hike</string>
+    <string name="date_of_hike">Date of Hike</string>
+    <string name="location">Location</string>
+    <string name="level_of_difficulty">Level of Difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="moderate">Moderate</string>
+    <string name="difficult">Difficult</string>
+    <string name="parking_available">Parking Available?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="image">Image</string>
+    <string name="select_image">Select Image</string>
+    <string name="please_select_an_image">Please select an image!</string>
+    <string name="clear_all">Clear all</string>
+    <string name="view_hike_list">View Hike List</string>
+    <string name="create">Create</string>
+    <string name="hike_list">Hike List</string>
+    <string name="create_hike">Create Hike</string>
+    <string name="location_label">Location:</string>
+    <string name="date_of_hike_label">Date of Hike:</string>
+    <string name="length_of_hike_label">Length of Hike:</string>
+    <string name="length_km">Length (km)</string>
+    <string name="observation_list">Observation List</string>
+    <string name="view_observation">View Observation</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="action_geolocate">Pick Place</string>
     <string name="default_info_title">Default Location</string>
@@ -18,5 +46,7 @@
     <string name="danger_lever">Danger Lever:</string>
     <string name="description">Description</string>
     <string name="how_to_respond">How to respond ?</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
