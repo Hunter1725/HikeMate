@@ -8,4 +8,7 @@
     <string name="getting_started">Bắt đầu</string>
     <string name="previous">Trở về</string>
     <string name="next">Tiếp tục</string>
+    <string name="action_geolocate">Chọn địa điểm</string>
+    <string name="default_info_title">Vị trí mặc định</string>
+    <string name="default_info_snippet">Không tìm thấy địa điểm nào, vì quyền truy cập vị trí đã bị tắt.</string>
 </resources>

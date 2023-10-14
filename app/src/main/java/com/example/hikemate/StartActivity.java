@@ -32,7 +32,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         initView();
         if (db.settingDao().getSetting() != null) {
-            startActivity(new Intent(StartActivity.this, GettingStartedActivity.class));
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
             finish();
         }
         initListener();
