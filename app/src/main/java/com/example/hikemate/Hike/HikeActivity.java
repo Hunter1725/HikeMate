@@ -125,6 +125,7 @@ public class HikeActivity extends AppCompatActivity {
             } else {
                 requestLocationUpdates();
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                Toast.makeText(this, "Getting your location!", Toast.LENGTH_SHORT).show();
             }
         }
     }
