@@ -26,6 +26,7 @@ public class GettingStartedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getting_started);
+        getSupportActionBar().hide();
 
 
         ViewPager2 viewPager = findViewById(R.id.viewPager);

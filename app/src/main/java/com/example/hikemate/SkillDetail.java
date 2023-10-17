@@ -26,6 +26,7 @@ public class SkillDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_skill_detail);
+        getSupportActionBar().hide();
 
         initView();
         initListener();

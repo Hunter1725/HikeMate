@@ -32,6 +32,7 @@ public class StartActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_start);
+        getSupportActionBar().hide();
         initView();
         if (db.settingDao().getSetting() != null) {
             startActivity(new Intent(StartActivity.this, MainActivity.class));

@@ -27,6 +27,7 @@ public class PlantDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_plant_detail);
+        getSupportActionBar().hide();
 
         initView();
         initListener();

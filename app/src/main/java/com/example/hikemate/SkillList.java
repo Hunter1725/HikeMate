@@ -43,6 +43,7 @@ public class SkillList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_survival_skills);
+        getSupportActionBar().hide();
         Glide.get(getApplicationContext()).setMemoryCategory(MemoryCategory.HIGH);
         initView();
         initListener();

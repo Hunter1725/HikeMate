@@ -90,6 +90,7 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_weather);
+        getSupportActionBar().hide();
         initView();
         initListener();
         Intent intent = getIntent();

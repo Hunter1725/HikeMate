@@ -44,6 +44,7 @@ public class PlantList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_plant_list);
+        getSupportActionBar().hide();
         Glide.get(getApplicationContext()).setMemoryCategory(MemoryCategory.HIGH);
         initView();
         initListener();

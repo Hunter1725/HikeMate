@@ -27,6 +27,7 @@ public class AnimalDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_animal_detail);
+        getSupportActionBar().hide();
 
         initView();
         initListener();

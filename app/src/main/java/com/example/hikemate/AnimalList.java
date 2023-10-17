@@ -44,6 +44,7 @@ public class AnimalList extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_animal_list);
+        getSupportActionBar().hide();
         Glide.get(getApplicationContext()).setMemoryCategory(MemoryCategory.HIGH);
         initView();
 
