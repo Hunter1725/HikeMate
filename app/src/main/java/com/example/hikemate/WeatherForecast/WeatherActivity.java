@@ -1,5 +1,6 @@
 package com.example.hikemate.WeatherForecast;
 
+import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
 import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ import com.example.hikemate.ContextWrapper;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Weather;
 import com.example.hikemate.GetCurrentLanguage;
+import com.example.hikemate.Hike.HikeActivity;
+import com.example.hikemate.MainActivity;
 import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.R;
 import com.example.hikemate.WeatherForecast.Model.DailyWeatherData;
@@ -69,7 +72,7 @@ import retrofit2.Response;
 public class WeatherActivity extends AppCompatActivity {
     public static final String API_KEY = "3486c23c3e2271c65e299d28ee6eb4a8";
     private static final String TAG = "WeatherActivity";
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     public static final int REQUEST_CHECK_SETTINGS = 2001;
     private FusedLocationProviderClient fusedLocationClient;
     private MaterialToolbar toolbarWeather;
@@ -557,6 +560,13 @@ public class WeatherActivity extends AppCompatActivity {
         db.weatherDao().updateWeather(weather);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(WeatherActivity.this, MainActivity.class);
+        intent.putExtra(SHOW_FRAGMENT, "mainFragment"); // Pass a unique identifier for the fragment
+        startActivity(intent);
+    }
 
     private void initListener() {
         toolbarWeather.setNavigationOnClickListener(new View.OnClickListener() {
@@ -589,7 +599,9 @@ public class WeatherActivity extends AppCompatActivity {
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WeatherActivity.this, MapsActivity.class));
+                Intent intent = new Intent(WeatherActivity.this, MapsActivity.class);
+                intent.putExtra("activity","first");
+                startActivity(intent);
             }
         });
     }

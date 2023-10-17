@@ -3,6 +3,7 @@ package com.example.hikemate.Maps;
 import static com.example.hikemate.WeatherForecast.WeatherActivity.REQUEST_CHECK_SETTINGS;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentContainerView;
 
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.Hike.HikeActivity;
 import com.example.hikemate.NetworkUtils;
 import com.example.hikemate.R;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
@@ -108,6 +110,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private SearchView mapSearch;
     private LatLng latLngPass;
+    private boolean showAgain = true;
 
 
     @Override
@@ -131,14 +134,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Places.initialize(getApplicationContext(), apiKey);
         mPlacesClient = Places.createClient(this);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        refreshLocation();
     }
 
     private void refreshLocation() {
         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).build();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             getLocationPermission();
-            requestLocationUpdates();
             return;
         }
 
@@ -179,9 +180,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.confirm) {
-                    Intent intent = new Intent(MapsActivity.this, WeatherActivity.class);
-                    intent.putExtra(LATLNG_KEY, latLngPass);
-                    startActivity(intent);
+                    //Get activity
+                    Intent intent = getIntent();
+                    String activity = intent.getStringExtra("activity");
+                    Intent intent2 = null;
+                    if (activity.equals("first")) {
+                        intent2 = new Intent(MapsActivity.this, WeatherActivity.class);
+                    } else if (activity.equals("second")) {
+                        intent2 = new Intent(MapsActivity.this, HikeActivity.class);
+                    }
+
+                    intent2.putExtra(LATLNG_KEY, latLngPass);
+                    startActivity(intent2);
                     return true;
                 }
                 return false; // Return false to indicate that the event has not been handled
@@ -279,9 +289,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // User enabled location settings. Request location updates with permission.
                 gpsPermission = true;
                 refreshLocation();
-//                loading.setVisibility(View.VISIBLE);
-//                btnLocation.setVisibility(View.GONE);
-//                sleep(5000);
+                loading.setVisibility(View.VISIBLE);
+                btnLocation.setVisibility(View.GONE);
+                sleep(5000);
                 Toast.makeText(this, "It will take a while to get your location!", Toast.LENGTH_LONG).show();
             }
         }
@@ -314,7 +324,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         // Prompt the user for permission.
-        requestLocationUpdates();
         getLocationPermission();
 
         mMap.clear();
@@ -417,6 +426,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
+            requestLocationUpdates();
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -434,6 +444,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
+                requestLocationUpdates();
                 refreshLocation();
                 loading.setVisibility(View.VISIBLE);
                 btnLocation.setVisibility(View.GONE);

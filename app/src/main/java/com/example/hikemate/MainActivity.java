@@ -38,7 +38,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String SHOW_FRAGMENT = "showFragment";
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private MaterialToolbar toolbar;
@@ -56,6 +56,19 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         initView();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            String fragmentToShow = intent.getStringExtra(SHOW_FRAGMENT);
+            if ("mainFragment".equals(fragmentToShow)) {
+                // Show the desired fragment using FragmentTransaction
+                replaceFragment(new MainFragment());
+                bottomNavigationView.setSelectedItemId(R.id.homeBottom);
+            } else if ("hikeList".equals(fragmentToShow)) {
+                replaceFragment(new HikeList());
+                bottomNavigationView.setSelectedItemId(R.id.hikeBottom);
+            }
+        }
 
 //        setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);

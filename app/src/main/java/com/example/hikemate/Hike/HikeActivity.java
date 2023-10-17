@@ -1,9 +1,20 @@
 package com.example.hikemate.Hike;
 
+import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
+import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
+import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
+import static com.example.hikemate.WeatherForecast.WeatherActivity.REQUEST_CHECK_SETTINGS;
+
+import android.Manifest;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -19,8 +30,11 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,19 +44,39 @@ import com.canhub.cropper.CropImageOptions;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.R;
+import com.example.hikemate.WeatherForecast.WeatherActivity;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import com.canhub.cropper.CropImageContractOptions;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HikeActivity extends AppCompatActivity {
@@ -53,16 +87,19 @@ public class HikeActivity extends AppCompatActivity {
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
     private ShapeableImageView imgHike;
     private Button btnSelectImage, btnClear, btnViewHikeList, btnCreate;
-
+    private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
     private Bitmap bitmapImageHike;
     private Long date;
-    private TextView txtWarning;
+    private TextView txtWarning, btnOpenMap;
     private MaterialDatePicker<Long> datePicker;
     private int difficulty = 1;
     private boolean parkingAvailable = true;
     private MaterialToolbar toolbarCreateHike;
+    private CircularProgressIndicator progressCalculate;
+    private LatLng incomingLatlng;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +116,165 @@ public class HikeActivity extends AppCompatActivity {
 
         initImagePickerNew();
 
+        Intent intent = getIntent();
+        if(intent != null) {
+            incomingLatlng = intent.getParcelableExtra(LATLNG_KEY);
+            if (incomingLatlng != null) {
+                progressCalculate.setVisibility(View.GONE);
+                getNameLocation(incomingLatlng);
+            } else {
+                requestLocationUpdates();
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            }
+        }
+    }
+
+    private LocationCallback locationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(@NonNull LocationResult locationResult) {
+            Location location = locationResult.getLastLocation();
+            if (location != null) {
+                progressCalculate.setVisibility(View.GONE);
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                getNameLocation(new LatLng(latitude, longitude));
+            }
+        }
+    };
+
+    private void getNameLocation(LatLng latLng) {
+        edtLocation.setText(reverseGeocodeAddress(latLng));
+    }
+
+    private String reverseGeocodeAddress(LatLng latLng) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String addressText = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                addressText = address.getAddressLine(0); // Get the full address
+
+                // Print or display the location name and address
+                Log.d("LocationInfo", "Address: " + addressText);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return addressText;
+    }
+
+    private void requestLocationUpdates() {
+        LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).build();
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+
+        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
+        LocationSettingsRequest locationSettingsRequest = builder.build();
+
+        // Check if the necessary location settings are satisfied
+        settingsClient.checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        // All location settings are satisfied. Request location updates here.
+                        requestLocationUpdatesWithPermission();
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (e instanceof ResolvableApiException) {
+                            // Location settings are not satisfied, but the user can resolve it.
+                            try {
+                                // Show a dialog to ask the user to enable location settings.
+                                ResolvableApiException resolvable = (ResolvableApiException) e;
+                                resolvable.startResolutionForResult(HikeActivity.this, REQUEST_CHECK_SETTINGS);
+                            } catch (IntentSender.SendIntentException sendEx) {
+                                // Ignore the error.
+                            }
+                        } else {
+                            // Location settings are not satisfied, and cannot be resolved directly.
+                            // Handle this case appropriately (e.g., show an error message).
+                            Toast.makeText(HikeActivity.this, "Location settings are not satisfied.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            if (resultCode == RESULT_OK) {
+                // User enabled location settings. Request location updates with permission.
+                requestLocationUpdatesWithPermission();
+            } else {
+                // User canceled or didn't enable location settings. Handle this case appropriately.
+                progressCalculate.setVisibility(View.GONE);
+                Toast.makeText(HikeActivity.this, "Location settings are not enabled.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void requestLocationUpdatesWithPermission() {
+        // Check for location permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Permissions are already granted, proceed with requesting location updates
+            LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).build();
+            progressCalculate.setVisibility(View.VISIBLE);
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+
+        } else {
+            // Request permissions
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                // User has previously denied the permission, show a rationale and request again if needed
+                showSnackbar();
+            } else {
+                // Request the permissions directly
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                }, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    private void showSnackbar() {
+        // Show a Snackbar to explain the need for permissions and prompt the user to grant them
+        Snackbar.make(findViewById(android.R.id.content), "Location permission is required for this app to work.", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Grant", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Request the permissions when the "Grant" button is clicked in the Snackbar
+                        ActivityCompat.requestPermissions(HikeActivity.this, new String[]{
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                        }, LOCATION_PERMISSION_REQUEST_CODE);
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            // Check if the permissions were granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions are granted, proceed with requesting location updates
+                requestLocationUpdates();
+            } else {
+                // Permissions are denied, handle this case (e.g., show an error message)
+                progressCalculate.setVisibility(View.GONE);
+                Toast.makeText(this, "Location permissions are required for this app to work.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initImagePickerNew() {
@@ -286,6 +482,15 @@ public class HikeActivity extends AppCompatActivity {
             }
         });
 
+        btnOpenMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HikeActivity.this, MapsActivity.class);
+                intent.putExtra("activity","second");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void save(){
@@ -316,6 +521,9 @@ public class HikeActivity extends AppCompatActivity {
             long id = db.hikeDao().insert(new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description));
             db.hikeImageDao().insertImage(new HikeImage(bitmapImageHike, (int) id));
             Toast.makeText(this, "Successful added the Hike with ID: " + id, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HikeActivity.this, MainActivity.class);
+            intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
+            startActivity(intent);
             edtHikeName.setText("");
             edtLocation.setText("");
             edtHikeLength.setText("");
@@ -333,6 +541,7 @@ public class HikeActivity extends AppCompatActivity {
         textInputLayoutHikeDate = findViewById(R.id.textInputLayoutHikeDate);
         textInputLayoutLocation = findViewById(R.id.textInputLayoutLocation);
         textInputLayoutDescription = findViewById(R.id.textInputLayoutDescription);
+        progressCalculate = findViewById(R.id.progressCalculate);
         edtHikeName = findViewById(R.id.edtHikeName);
         edtHikeLength = findViewById(R.id.edtHikeLength);
         edtDoH = findViewById(R.id.edtDoH);
@@ -350,6 +559,7 @@ public class HikeActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         btnViewHikeList = findViewById(R.id.btnViewHikeList);
         btnCreate = findViewById(R.id.btnCreate);
+        btnOpenMap = findViewById(R.id.btnOpenMap);
         txtWarning = findViewById(R.id.txtWarning);
         toolbarCreateHike = findViewById(R.id.toolbarCreateHike);
 
@@ -369,4 +579,20 @@ public class HikeActivity extends AppCompatActivity {
         }
         return 0;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(HikeActivity.this, MainActivity.class);
+        intent.putExtra(SHOW_FRAGMENT, "hikeListFragment"); // Pass a unique identifier for the fragment
+        startActivity(intent);
+    }
+
+    //        db = HikeDatabase.getInstance(HikeActivity.this);
+
+
+//        Hike hike = new Hike();
+//
+//        db.hikeDao().insert(hike);
+
 }
