@@ -25,6 +25,7 @@ import android.widget.Button;
 
 import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.Hike.HikeList;
 import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.example.hikemate.Hike.HikeActivity;
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 if (itemId == R.id.homeBottom) {
                     replaceFragment(new MainFragment());
                 } else if(itemId == R.id.hikeBottom) {
-                    startActivity(new Intent(MainActivity.this, HikeActivity.class));
+                    replaceFragment(new HikeList());
                 }else if (itemId == R.id.chat) {
                     startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 }else if (itemId == R.id.knowledge) {

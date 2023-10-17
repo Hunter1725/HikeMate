@@ -53,4 +53,5 @@
     <string name="animals_list">Danh sách động vật</string>
     <string name="plants_list">Danh sách thực vật</string>
     <string name="survival_skill_list">Danh sách kĩ năng sinh tồn</string>
+    <string name="no_hikes_have_been_added_yet">Chưa có chuyến đi bộ nào được thêm vào!</string>
 </resources>

@@ -22,6 +22,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageOptions;
@@ -314,7 +316,6 @@ public class HikeActivity extends AppCompatActivity {
             long id = db.hikeDao().insert(new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description));
             db.hikeImageDao().insertImage(new HikeImage(bitmapImageHike, (int) id));
             Toast.makeText(this, "Successful added the Hike with ID: " + id, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(HikeActivity.this, HikeList.class));
             edtHikeName.setText("");
             edtLocation.setText("");
             edtHikeLength.setText("");
@@ -368,15 +369,4 @@ public class HikeActivity extends AppCompatActivity {
         }
         return 0;
     }
-
-
-
-
-//        db = HikeDatabase.getInstance(HikeActivity.this);
-
-
-//        Hike hike = new Hike();
-//
-//        db.hikeDao().insert(hike);
-
 }

@@ -1,12 +1,12 @@
 package com.example.hikemate.Hike;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,53 +29,39 @@ import com.bumptech.glide.MemoryCategory;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
-import com.example.hikemate.MainActivity;
 import com.example.hikemate.R;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import android.view.LayoutInflater;
 
-public class HikeList extends AppCompatActivity {
-    private AppBarLayout appBarLayout;
-    private MaterialToolbar toolbarDetail;
-    private NestedScrollView nestedScrollView;
+public class HikeList extends Fragment {
     private RecyclerView detailsRecView;
     private TextView txtEmpty;
     private ShapeableImageView imageEmpty;
     private HikeAdapter hikeAdapter;
     private ArrayList<Hike> hikeArrayList;
-    private FloatingActionButton fabScrollToTop;
     private HikeDatabase db;
     private Button btncreateHike;
     private Hike deletedHike;
     private HikeImage deletedHikeImage;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
-        setContentView(R.layout.hike_list);
-        getSupportActionBar().hide();
-        initView();
-
-        toolbarDetail.setElevation(4);
-
-        initListener();
-
-        initRecyclerview();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.hike_list, container, false);
+        initView(view);
+        return view;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         initRecyclerview();
     }
+
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -90,7 +77,7 @@ public class HikeList extends AppCompatActivity {
                 deletedHikeImage = db.hikeImageDao().getHikeImageById(deletedHike.getId());
 
                 //Dialog builder
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(HikeList.this, R.style.ThemeOverlay_App_MaterialAlertDialog);
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_App_MaterialAlertDialog);
                 builder.setTitle("Delete person");
                 builder.setMessage("Are you sure you want to delete person " + deletedHike.getHikeName() + "?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -132,7 +119,7 @@ public class HikeList extends AppCompatActivity {
             if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
                 View itemView = viewHolder.itemView;
                 Paint paint = new Paint();
-                Drawable icon = ContextCompat.getDrawable(HikeList.this, R.drawable.ic_delete);
+                Drawable icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_delete);
                 int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
 
                 // Draw the red background
@@ -151,86 +138,46 @@ public class HikeList extends AppCompatActivity {
     };
 
     private void initRecyclerview() {
-        Glide.get(getApplicationContext()).setMemoryCategory(MemoryCategory.HIGH);
 
-        db = HikeDatabase.getInstance(HikeList.this);
+        Glide.get(getActivity()).setMemoryCategory(MemoryCategory.HIGH);
+        db = HikeDatabase.getInstance(getActivity());
+
         hikeArrayList = (ArrayList<Hike>) db.hikeDao().getAllHikes();
 
-        detailsRecView = findViewById(R.id.detailsRecView);
-        detailsRecView.setLayoutManager(new LinearLayoutManager(this));
-        hikeAdapter = new HikeAdapter(hikeArrayList, this);
-        detailsRecView.setAdapter(hikeAdapter);
+        if(hikeArrayList.isEmpty()){
+            txtEmpty.setVisibility(View.VISIBLE);
+            imageEmpty.setVisibility(View.VISIBLE);
+            detailsRecView.setVisibility(View.GONE);
+        }else{
+            txtEmpty.setVisibility(View.GONE);
+            imageEmpty.setVisibility(View.GONE);
+            detailsRecView.setVisibility(View.VISIBLE);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(detailsRecView);
-    }
+            detailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            hikeAdapter = new HikeAdapter(hikeArrayList, getActivity());
+            detailsRecView.setAdapter(hikeAdapter);
 
-    private void initListener() {
-        toolbarDetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+            itemTouchHelper.attachToRecyclerView(detailsRecView);
+        }
 
-        toolbarDetail.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.search) {
-                    startActivity(new Intent(HikeList.this, HikeList.class));
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-        fabScrollToTop.hide();
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                // Check the scroll position
-                if (scrollY == 0) {
-                    // Scroll is at the top, hide the FloatingActionButton
-                    fabScrollToTop.hide();
-                } else if (scrollY > oldScrollY) {
-                    // Scrolling downwards, hide the FloatingActionButton
-                    fabScrollToTop.hide();
-                } else {
-                    // Scrolling upwards, show the FloatingActionButton
-                    fabScrollToTop.show();
-                }
-            }
-        });
-
-        //FAB scroll up
-        // Set an OnClickListener for the FloatingActionButton
-        fabScrollToTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Scroll to the top of the NestedScrollView
-                nestedScrollView.smoothScrollTo(0, 0);
-            }
-        });
 
 
     }
 
-    private void initView() {
-        toolbarDetail = findViewById(R.id.toolbarDetail);
-        detailsRecView = findViewById(R.id.detailsRecView);
-        fabScrollToTop = findViewById(R.id.fabScrollToTop);
-        txtEmpty = findViewById(R.id.txtEmpty);
-        imageEmpty = findViewById(R.id.imageEmpty);
-        nestedScrollView = findViewById(R.id.nestedScrollView);
-        db = HikeDatabase.getInstance(HikeList.this);
+    private void initView(View view) {
+        detailsRecView = view.findViewById(R.id.detailsRecView);
+        txtEmpty = view.findViewById(R.id.txtEmpty);
+        imageEmpty = view.findViewById(R.id.imageEmpty);
+        db = HikeDatabase.getInstance(getActivity());
+        detailsRecView = view.findViewById(R.id.detailsRecView);
 
-        btncreateHike = findViewById(R.id.btnCreateHike);
+
+        btncreateHike = view.findViewById(R.id.btnCreateHike);
         btncreateHike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HikeList.this, HikeActivity.class));
+                startActivity(new Intent(getActivity(), HikeActivity.class));
             }
         });
     }
