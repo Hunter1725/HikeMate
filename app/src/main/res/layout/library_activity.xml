@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:text="Animals and plants"
+        android:text="@string/animals_and_plants"
+        android:textColor="@color/green6"
         android:layout_marginBottom="15dp"/>
     <!-- MaterialCardView 1 -->
     <com.google.android.material.card.MaterialCardView
@@ -25,8 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="@color/primary"
-            android:visibility="gone">
+            android:background="@color/primary">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image1"
@@ -40,7 +40,7 @@
                 android:id="@+id/name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Animal classification"
+                android:text="@string/animal_classification"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
@@ -49,7 +49,7 @@
                 android:id="@+id/description1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Animals are multicellular, eukaryotic organisms in the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, have myocytes and are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. "
+                android:text="@string/the_plant_kingdom_encompasses_organisms_that_lack_the_ability_to_move_freely_primarily_including_grasses_and_various_types_of_trees_plants_play_a_vital_role_in_photosynthesis_producing_oxygen_and_providing_sustenance_for_many_other_organisms"
                 android:layout_marginTop="8dp"/>
 
             <Button
@@ -69,15 +69,15 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="@color/primary"
-            android:visibility="gone">
+            android:background="@color/primary">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image2"
@@ -91,7 +91,7 @@
                 android:id="@+id/name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Plant classification"
+                android:text="@string/plant_classification"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
@@ -100,7 +100,7 @@
                 android:id="@+id/description2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Plant, (kingdom Plantae), any multicellular eukaryotic life-form characterized by (1) photosynthetic nutrition (a characteristic possessed by all plants except some parasitic plants and underground orchids), in which chemical energy is produced from water, minerals, and carbon dioxide with the aid of pigments and the radiant energy."
+                android:text="@string/the_animal_kingdom_comprises_organisms_capable_of_independent_movement_such_as_marine_life_terrestrial_animals_and_species_inhabiting_the_skies_animals_exhibit_diverse_forms_and_behaviors_serving_crucial_roles_in_the_food_chain_and_acting_as_a_source_of_sustenance_raw_materials_and_medical_support_for_humans"
                 android:layout_marginTop="8dp"/>
 
             <Button
@@ -133,7 +133,7 @@
                 android:id="@+id/image3"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:src="@drawable/plant_class_1"
+                android:src="@drawable/skillbg"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/RoundedImageViewShape"/>
 
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Survival skills"
+                android:text="@string/survival_skills"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -150,7 +150,7 @@
                 android:id="@+id/description3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Before talking about those fancy basic hiking skills, let’s start with the basics first. The general rule: never ever attempt a new hike without proper research and planning. You know how dangerous it is because it is so risky and there are so many uncertainties in the forest or mountain."
+                android:text="@string/before_talking_about_those_fancy_basic_hiking_skills_let_s_start_with_the_basics_first_the_general_rule_never_ever_attempt_a_new_hike_without_proper_research_and_planning_you_know_how_dangerous_it_is_because_it_is_so_risky_and_there_are_so_many_uncertainties_in_the_forest_or_mountain"
                 android:layout_marginTop="8dp"/>
 
             <Button

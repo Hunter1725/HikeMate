@@ -67,8 +67,10 @@ public class SkillList extends AppCompatActivity {
                 if (scrollY == 0) {
                     // Scroll is at the top, hide the FloatingActionButton
                     fabScrollToTop.hide();
-                }
-                else {
+                } else if (scrollY > oldScrollY) {
+                    // Scrolling downwards, hide the FloatingActionButton
+                    fabScrollToTop.hide();
+                } else {
                     // Scrolling upwards, show the FloatingActionButton
                     fabScrollToTop.show();
                 }

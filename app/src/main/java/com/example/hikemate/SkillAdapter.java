@@ -56,7 +56,7 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
 
         Glide.with(context)
                 .load(item.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.baseline_downloading_24)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(holder.itemImage);
         if(GetCurrentLanguage.getCurrentLanguage(context).equals("vi")){

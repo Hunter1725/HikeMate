@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, HikeActivity.class));
                 }else if (itemId == R.id.chat) {
                     startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                }else if (itemId == R.id.knowledge) {
+                    replaceFragment(new LibraryActivity());
                 }
                 return true;
             }

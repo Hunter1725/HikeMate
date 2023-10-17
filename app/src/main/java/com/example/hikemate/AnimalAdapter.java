@@ -52,7 +52,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         Glide.with(context)
                 .load(item.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.baseline_downloading_24)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(holder.itemImage);
         if(GetCurrentLanguage.getCurrentLanguage(context).equals("vi")){

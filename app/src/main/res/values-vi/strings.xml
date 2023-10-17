@@ -43,4 +43,14 @@
     <string name="action_geolocate">Chọn địa điểm</string>
     <string name="default_info_title">Vị trí mặc định</string>
     <string name="default_info_snippet">Không tìm thấy địa điểm nào, vì quyền truy cập vị trí đã bị tắt.</string>
+    <string name="animals_and_plants">Động vật và thực vật</string>
+    <string name="animal_classification">Lớp động vật</string>
+    <string name="plant_classification">Lớp thực vật</string>
+    <string name="survival_skills">Các kĩ năng sinh tồn</string>
+    <string name="before_talking_about_those_fancy_basic_hiking_skills_let_s_start_with_the_basics_first_the_general_rule_never_ever_attempt_a_new_hike_without_proper_research_and_planning_you_know_how_dangerous_it_is_because_it_is_so_risky_and_there_are_so_many_uncertainties_in_the_forest_or_mountain">Trước khi nói về những kỹ năng đi bộ đường dài cơ bản thú vị đó, trước tiên hãy bắt đầu với những điều cơ bản. Nguyên tắc chung: không bao giờ thử một chuyến đi bộ đường dài mới mà không có sự nghiên cứu và lập kế hoạch thích hợp. Bạn biết nó nguy hiểm như thế nào vì nó rất nguy hiểm và có quá nhiều điều bất ổn trong rừng hoặc trên núi.</string>
+    <string name="the_animal_kingdom_comprises_organisms_capable_of_independent_movement_such_as_marine_life_terrestrial_animals_and_species_inhabiting_the_skies_animals_exhibit_diverse_forms_and_behaviors_serving_crucial_roles_in_the_food_chain_and_acting_as_a_source_of_sustenance_raw_materials_and_medical_support_for_humans">Lớp động vật bao gồm các sinh vật có khả năng di chuyển tự do như động vật biển, động vật trên đất liền và loài sống trong không gian. Chúng đa dạng về hình thức và hành vi, đóng vai trò quan trọng trong chuỗi thức ăn và là nguồn cung cấp thức ăn, nguyên liệu và hỗ trợ y học cho con người.</string>
+    <string name="the_plant_kingdom_encompasses_organisms_that_lack_the_ability_to_move_freely_primarily_including_grasses_and_various_types_of_trees_plants_play_a_vital_role_in_photosynthesis_producing_oxygen_and_providing_sustenance_for_many_other_organisms">Lớp thực vật bao gồm các sinh vật không có khả năng di chuyển tự do, chủ yếu là cây cỏ và loại cây khác. Thực vật đóng vai trò quan trọng trong quá trình quang hợp, sản xuất oxy và cung cấp thức ăn cho nhiều sinh vật khác.</string>
+    <string name="animals_list">Danh sách động vật</string>
+    <string name="plants_list">Danh sách thực vật</string>
+    <string name="survival_skill_list">Danh sách kĩ năng sinh tồn</string>
 </resources>

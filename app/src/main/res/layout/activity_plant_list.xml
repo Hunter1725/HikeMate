@@ -17,7 +17,9 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="35dp">
+            android:layout_marginBottom="35dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -30,7 +32,7 @@
                     android:textStyle="bold"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="Plants List"
+                    android:text="@string/plants_list"
                     android:textSize="20sp" />
 
                 <androidx.recyclerview.widget.RecyclerView

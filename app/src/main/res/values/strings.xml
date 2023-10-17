@@ -46,7 +46,14 @@
     <string name="danger_lever">Danger Lever:</string>
     <string name="description">Description</string>
     <string name="how_to_respond">How to respond ?</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="animals_and_plants">Animals and plants</string>
+    <string name="animal_classification">Animal classification</string>
+    <string name="plant_classification">Plant classification</string>
+    <string name="survival_skills">Survival skills</string>
+    <string name="before_talking_about_those_fancy_basic_hiking_skills_let_s_start_with_the_basics_first_the_general_rule_never_ever_attempt_a_new_hike_without_proper_research_and_planning_you_know_how_dangerous_it_is_because_it_is_so_risky_and_there_are_so_many_uncertainties_in_the_forest_or_mountain">Before talking about those fancy basic hiking skills, let’s start with the basics first. The general rule: never ever attempt a new hike without proper research and planning. You know how dangerous it is because it is so risky and there are so many uncertainties in the forest or mountain.</string>
+    <string name="the_animal_kingdom_comprises_organisms_capable_of_independent_movement_such_as_marine_life_terrestrial_animals_and_species_inhabiting_the_skies_animals_exhibit_diverse_forms_and_behaviors_serving_crucial_roles_in_the_food_chain_and_acting_as_a_source_of_sustenance_raw_materials_and_medical_support_for_humans">The animal kingdom comprises organisms capable of independent movement, such as marine life, terrestrial animals, and species inhabiting the skies. Animals exhibit diverse forms and behaviors, serving crucial roles in the food chain and acting as a source of sustenance, raw materials, and medical support for humans.</string>
+    <string name="the_plant_kingdom_encompasses_organisms_that_lack_the_ability_to_move_freely_primarily_including_grasses_and_various_types_of_trees_plants_play_a_vital_role_in_photosynthesis_producing_oxygen_and_providing_sustenance_for_many_other_organisms">The plant kingdom encompasses organisms that lack the ability to move freely, primarily including grasses and various types of trees. Plants play a vital role in photosynthesis, producing oxygen, and providing sustenance for many other organisms.</string>
+    <string name="animals_list">Animals List</string>
+    <string name="plants_list">Plants List</string>
+    <string name="survival_skill_list">Survival skill List</string>
 </resources>
