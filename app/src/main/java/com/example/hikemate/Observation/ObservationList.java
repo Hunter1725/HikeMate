@@ -1,11 +1,10 @@
-package com.example.hikemate.Hike;
+package com.example.hikemate.Observation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,33 +26,35 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
 import com.example.hikemate.Database.HikeDatabase;
-import com.example.hikemate.Database.Model.Hike;
-import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.Database.Model.Observation;
+import com.example.hikemate.Database.Model.ObservationImage;
 import com.example.hikemate.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import android.view.LayoutInflater;
 
-public class HikeList extends Fragment {
+public class ObservationList extends AppCompatActivity {
+
     private RecyclerView detailsRecView;
     private TextView txtEmpty;
     private ShapeableImageView imageEmpty;
-    private HikeAdapter hikeAdapter;
-    private ArrayList<Hike> hikeArrayList;
+    private ObservationAdapter observationAdapter;
+    private ArrayList<Observation> observationArrayList;
     private HikeDatabase db;
-    private Button btncreateHike;
-    private Hike deletedHike;
-    private HikeImage deletedHikeImage;
+    private Button btnCreateObservation;
+    private Observation deletedObservation;
+    private ObservationImage deletedObservationImage;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hike_list, container, false);
-        initView(view);
-        return view;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_observation_list);
+        getSupportActionBar().hide();
+        initView();
+
+        initRecyclerview();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class HikeList extends Fragment {
         super.onResume();
         initRecyclerview();
     }
+
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -73,28 +75,28 @@ public class HikeList extends Fragment {
             int position = viewHolder.getAdapterPosition();
 
             if (direction == ItemTouchHelper.LEFT) {
-                deletedHike = hikeArrayList.get(position);
-                deletedHikeImage = db.hikeImageDao().getHikeImageById(deletedHike.getId());
+                deletedObservation = observationArrayList.get(position);
+                deletedObservationImage = db.observationImageDao().getObservationImageById(deletedObservation.getId());
 
                 //Dialog builder
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_App_MaterialAlertDialog);
-                builder.setTitle("Delete observation");
-                builder.setMessage("Are you sure you want to delete hike " + deletedHike.getHikeName() + "?");
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ObservationList.this, R.style.ThemeOverlay_App_MaterialAlertDialog);
+                builder.setTitle("Delete person");
+                builder.setMessage("Are you sure you want to delete person " + deletedObservation.getName() + "?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Perform guest login action
-                        db.hikeDao().deleteHike(deletedHike); // Delete from the database first
-                        hikeArrayList.remove(position); // Then remove from the list
-                        hikeAdapter.notifyItemRemoved(position);
-                        Snackbar.make(detailsRecView, "The hike " + deletedHike.getHikeName() + " was removed!", Snackbar.LENGTH_LONG)
+                        db.observationDao().deleteObservation(deletedObservation); // Delete from the database first
+                        observationArrayList.remove(position); // Then remove from the list
+                        observationAdapter.notifyItemRemoved(position);
+                        Snackbar.make(detailsRecView, "The person " + deletedObservation.getName() + " was removed!", Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        db.hikeDao().insert(deletedHike); // Insert back to the database
-                                        db.hikeImageDao().insertImage(deletedHikeImage);
-                                        hikeArrayList.add(position, deletedHike); // Add back to the list
-                                        hikeAdapter.notifyItemInserted(position);
+                                        db.observationDao().insert(deletedObservation); // Insert back to the database
+                                        db.observationImageDao().insertImage(deletedObservationImage);
+                                        observationArrayList.add(position, deletedObservation); // Add back to the list
+                                        observationAdapter.notifyItemInserted(position);
                                         initRecyclerview();
                                     }
                                 }).setActionTextColor(Color.parseColor("#0083BE"))
@@ -111,7 +113,7 @@ public class HikeList extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-    }
+        }
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -119,7 +121,7 @@ public class HikeList extends Fragment {
             if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
                 View itemView = viewHolder.itemView;
                 Paint paint = new Paint();
-                Drawable icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_delete);
+                Drawable icon = ContextCompat.getDrawable(ObservationList.this, R.drawable.ic_delete);
                 int iconMargin = (itemView.getHeight() - icon.getIntrinsicHeight()) / 2;
 
                 // Draw the red background
@@ -139,12 +141,12 @@ public class HikeList extends Fragment {
 
     private void initRecyclerview() {
 
-        Glide.get(getActivity()).setMemoryCategory(MemoryCategory.HIGH);
-        db = HikeDatabase.getInstance(getActivity());
+        Glide.get(ObservationList.this).setMemoryCategory(MemoryCategory.HIGH);
+        db = HikeDatabase.getInstance(ObservationList.this);
 
-        hikeArrayList = (ArrayList<Hike>) db.hikeDao().getAllHikes();
+        observationArrayList = (ArrayList<Observation>) db.observationDao().getAllObservation();
 
-        if(hikeArrayList.isEmpty()){
+        if(observationArrayList.isEmpty()){
             txtEmpty.setVisibility(View.VISIBLE);
             imageEmpty.setVisibility(View.VISIBLE);
             detailsRecView.setVisibility(View.GONE);
@@ -153,31 +155,29 @@ public class HikeList extends Fragment {
             imageEmpty.setVisibility(View.GONE);
             detailsRecView.setVisibility(View.VISIBLE);
 
-            detailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            hikeAdapter = new HikeAdapter(hikeArrayList, getActivity());
-            detailsRecView.setAdapter(hikeAdapter);
+            detailsRecView.setLayoutManager(new LinearLayoutManager(ObservationList.this));
+            observationAdapter = new ObservationAdapter(observationArrayList, ObservationList.this);
+            detailsRecView.setAdapter(observationAdapter);
 
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(detailsRecView);
         }
-
-
-
     }
 
-    private void initView(View view) {
-        detailsRecView = view.findViewById(R.id.detailsRecView);
-        txtEmpty = view.findViewById(R.id.txtEmpty);
-        imageEmpty = view.findViewById(R.id.imageEmpty);
-        db = HikeDatabase.getInstance(getActivity());
-        detailsRecView = view.findViewById(R.id.detailsRecView);
+
+    private void initView() {
+        detailsRecView = findViewById(R.id.detailsRecView);
+        txtEmpty = findViewById(R.id.txtEmpty);
+        imageEmpty = findViewById(R.id.imageEmpty);
+        db = HikeDatabase.getInstance(ObservationList.this);
+        detailsRecView = findViewById(R.id.detailsRecView);
 
 
-        btncreateHike = view.findViewById(R.id.btnCreateHike);
-        btncreateHike.setOnClickListener(new View.OnClickListener() {
+        btnCreateObservation = findViewById(R.id.btnCreateObservation);
+        btnCreateObservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), HikeActivity.class));
+                startActivity(new Intent(ObservationList.this, ObservationActivity.class));
             }
         });
     }

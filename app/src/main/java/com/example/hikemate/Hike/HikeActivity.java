@@ -117,7 +117,7 @@ public class HikeActivity extends AppCompatActivity {
         initImagePickerNew();
 
         Intent intent = getIntent();
-        if(intent != null) {
+        if (intent != null) {
             incomingLatlng = intent.getParcelableExtra(LATLNG_KEY);
             if (incomingLatlng != null) {
                 progressCalculate.setVisibility(View.GONE);
@@ -411,7 +411,7 @@ public class HikeActivity extends AppCompatActivity {
                 edtDoH.setText("");
                 edtLocation.setText("");
                 edtDescription.setText("");
-                bitmapImageHike=null;
+                bitmapImageHike = null;
                 imgHike.setVisibility(View.GONE);
             }
         });
@@ -419,7 +419,7 @@ public class HikeActivity extends AppCompatActivity {
         edtHikeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textInputLayoutHikeName.setError(null);
                 }
             }
@@ -428,7 +428,7 @@ public class HikeActivity extends AppCompatActivity {
         edtDoH.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     textInputLayoutHikeDate.setError(null);
                 }
             }
@@ -437,7 +437,7 @@ public class HikeActivity extends AppCompatActivity {
         edtLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     textInputLayoutLocation.setError(null);
                 }
             }
@@ -446,7 +446,7 @@ public class HikeActivity extends AppCompatActivity {
         radioDifficulty.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.btnEasy){
+                if (checkedId == R.id.btnEasy) {
                     difficulty = 1;
                 } else if (checkedId == R.id.btnModerate) {
                     difficulty = 2;
@@ -459,7 +459,7 @@ public class HikeActivity extends AppCompatActivity {
         edtDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     textInputLayoutDescription.setError(null);
                 }
             }
@@ -468,7 +468,7 @@ public class HikeActivity extends AppCompatActivity {
         radioParkingAvailable.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.btnParkingAvailable){
+                if (checkedId == R.id.btnParkingAvailable) {
                     parkingAvailable = true;
                 } else if (checkedId == R.id.btnParkingUnavailable) {
                     parkingAvailable = false;
@@ -487,38 +487,38 @@ public class HikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HikeActivity.this, MapsActivity.class);
-                intent.putExtra("activity","second");
+                intent.putExtra("activity", "second");
                 startActivity(intent);
             }
         });
 
     }
 
-    private void save(){
+    private void save() {
         if (edtHikeName.getText().toString().isEmpty()) {
             textInputLayoutHikeName.setError("Please enter the Hike name!");
             Toast.makeText(this, "Please enter the Hike name!", Toast.LENGTH_SHORT).show();
-        }else if (edtHikeLength.getText().toString().isEmpty()) {
+        } else if (edtHikeLength.getText().toString().isEmpty()) {
             textInputLayoutHikeLength.setError("Please enter the length of Hike!");
             Toast.makeText(this, "Please enter the length of Hike!", Toast.LENGTH_SHORT).show();
-        }else if (edtDoH.getText().toString().isEmpty()) {
+        } else if (edtDoH.getText().toString().isEmpty()) {
             textInputLayoutHikeDate.setError("Please select the date of Hike!");
             Toast.makeText(this, "Please select the date of Hike!", Toast.LENGTH_SHORT).show();
-        }else if (edtLocation.getText().toString().isEmpty()) {
+        } else if (edtLocation.getText().toString().isEmpty()) {
             textInputLayoutLocation.setError("Please select the location!");
             Toast.makeText(this, "Please select the location!", Toast.LENGTH_SHORT).show();
-        }else if (edtDescription.getText().toString().isEmpty()) {
+        } else if (edtDescription.getText().toString().isEmpty()) {
             textInputLayoutDescription.setError("Please select the description!");
             Toast.makeText(this, "Please select the description!", Toast.LENGTH_SHORT).show();
         } else if (bitmapImageHike == null) {
             txtWarning.setVisibility(View.VISIBLE);
             Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             txtWarning.setVisibility(View.GONE);
             String hikeName = edtHikeName.getText().toString();
             String location = edtLocation.getText().toString();
             double length = Double.parseDouble(edtHikeLength.getText().toString());
-            String description= edtDescription.getText().toString();
+            String description = edtDescription.getText().toString();
             long id = db.hikeDao().insert(new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description));
             db.hikeImageDao().insertImage(new HikeImage(bitmapImageHike, (int) id));
             Toast.makeText(this, "Successful added the Hike with ID: " + id, Toast.LENGTH_SHORT).show();
@@ -530,7 +530,7 @@ public class HikeActivity extends AppCompatActivity {
             edtHikeLength.setText("");
             edtDoH.setText("");
             edtDescription.setText("");
-            bitmapImageHike=null;
+            bitmapImageHike = null;
             imgHike.setVisibility(View.GONE);
         }
 
@@ -588,12 +588,5 @@ public class HikeActivity extends AppCompatActivity {
         intent.putExtra(SHOW_FRAGMENT, "hikeListFragment"); // Pass a unique identifier for the fragment
         startActivity(intent);
     }
-
-    //        db = HikeDatabase.getInstance(HikeActivity.this);
-
-
-//        Hike hike = new Hike();
-//
-//        db.hikeDao().insert(hike);
 
 }

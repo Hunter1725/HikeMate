@@ -1,5 +1,7 @@
 package com.example.hikemate.Hike;
 
+import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,6 +32,9 @@ import com.example.hikemate.Converter.TimeConverter;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.Observation.ObservationActivity;
+import com.example.hikemate.Observation.ObservationList;
 import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
@@ -53,7 +58,7 @@ public class HikeDetail extends AppCompatActivity {
     private RadioGroup radioDifficulty, radioParkingAvailable;
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
     private ShapeableImageView imageHike, iconCamera;
-    private Button btnSelectImage, btnCancel, btnViewHikeList, btnSave;
+    private Button btnSelectImage, btnCancel, btnViewHikeList, btnSave, btnCreateObservation, btnViewObservation;
     private TextView txtHikeName;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
@@ -197,6 +202,20 @@ public class HikeDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        btnViewObservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HikeDetail.this, ObservationList.class);
+                intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
+                startActivity(intent);
+            }
+        });
+        btnCreateObservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HikeDetail.this, ObservationActivity.class));
             }
         });
 
@@ -388,6 +407,9 @@ public class HikeDetail extends AppCompatActivity {
         btnParkingUnavailable = findViewById(R.id.btnParkingUnavailable);
         btnSelectImage = findViewById(R.id.btnSelectImage);
         btnViewHikeList = findViewById(R.id.btnViewHikeList);
+        btnViewObservation = findViewById(R.id.btnViewObservation);
+        btnCreateObservation = findViewById(R.id.btnCreateObservation);
+
         txtWarning = findViewById(R.id.txtWarning);
         toolbarHike = findViewById(R.id.toolbarHike);
         btnSave = findViewById(R.id.btnSave);

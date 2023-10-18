@@ -14,6 +14,8 @@ import com.example.hikemate.Database.Dao.HikeDao;
 import com.example.hikemate.Database.Dao.HikeImageDao;
 import com.example.hikemate.Database.Dao.MessageDao;
 import com.example.hikemate.Database.Dao.AnimalDao;
+import com.example.hikemate.Database.Dao.ObservationDao;
+import com.example.hikemate.Database.Dao.ObservationImageDao;
 import com.example.hikemate.Database.Dao.PlantDao;
 import com.example.hikemate.Database.Dao.SettingDao;
 import com.example.hikemate.Database.Model.Hike;
@@ -22,6 +24,8 @@ import com.example.hikemate.Database.Dao.WeatherDao;
 import com.example.hikemate.Database.Model.Message;
 import com.example.hikemate.Database.Dao.SkillDao;
 import com.example.hikemate.Database.Model.Animal;
+import com.example.hikemate.Database.Model.Observation;
+import com.example.hikemate.Database.Model.ObservationImage;
 import com.example.hikemate.Database.Model.Plant;
 import com.example.hikemate.Database.Model.Setting;
 import com.example.hikemate.Database.Model.Weather;
@@ -33,12 +37,13 @@ import java.util.concurrent.Executors;
 
 
 
-@Database(entities = {Setting.class, Weather.class, Message.class, Animal.class, Plant.class, Skill.class, Hike.class, HikeImage.class}, version = 1)
+@Database(entities = {Setting.class, Weather.class, Message.class, Animal.class, Plant.class, Skill.class, Hike.class, HikeImage.class, Observation.class, ObservationImage.class}, version = 1)
 public abstract class HikeDatabase extends androidx.room.RoomDatabase {
     public abstract SettingDao settingDao();
 
+    public abstract ObservationDao observationDao();
+    public abstract ObservationImageDao observationImageDao();
     public abstract HikeDao hikeDao();
-
     public abstract HikeImageDao hikeImageDao();
     public abstract WeatherDao weatherDao();
     public abstract MessageDao messageDao();

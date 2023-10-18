@@ -57,4 +57,8 @@
     <string name="plants_list">Plants List</string>
     <string name="survival_skill_list">Survival skill List</string>
     <string name="no_hikes_have_been_added_yet">No hikes have been added yet!</string>
+    <string name="create_observation">Create Observation</string>
+    <string name="observation_name">Observation Name</string>
+    <string name="observation_time">Observation Time</string>
+    <string name="additional_comments">Additional Comments</string>
 </resources>

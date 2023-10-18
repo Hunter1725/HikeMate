@@ -54,4 +54,8 @@
     <string name="plants_list">Danh sách thực vật</string>
     <string name="survival_skill_list">Danh sách kĩ năng sinh tồn</string>
     <string name="no_hikes_have_been_added_yet">Chưa có chuyến đi bộ nào được thêm vào!</string>
+    <string name="create_observation">Tạo Quan Sát</string>
+    <string name="observation_name">Tên Quan Sát</string>
+    <string name="observation_time">Thời Gian Quan Sát</string>
+    <string name="additional_comments">Ghi chú bổ sung</string>
 </resources>

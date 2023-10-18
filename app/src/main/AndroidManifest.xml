@@ -20,6 +20,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Observation.ObservationList"
+            android:exported="false" />
+        <activity
+            android:name=".Observation.ObservationAdapter"
+            android:exported="false" />
+        <activity
             android:name=".Observation.ObservationDetail"
             android:exported="false" />
         <activity
