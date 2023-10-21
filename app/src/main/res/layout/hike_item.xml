@@ -26,7 +26,8 @@
             android:scaleType="centerCrop"
             app:strokeWidth="3dp"
             app:strokeColor="@color/green4"
-            app:shapeAppearanceOverlay="@style/RoundedImageViewShape2"
+            app:shapeAppearanceOverlay="@style/RoundedImageViewShape"
+            android:padding="5dp"
             app:srcCompat="@drawable/ic_launcher_background"
             android:contentDescription="Image of Hike" />
 

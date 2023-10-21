@@ -26,4 +26,7 @@ public interface ObservationDao {
 
     @Query("SELECT * FROM observation WHERE name LIKE :searchQuery")
     List<Observation> searchObservation(String searchQuery);
+    @Query("SELECT * FROM Observation WHERE hike_id = :hikeId")
+    List<Observation> getObservationsForHike(int hikeId);
+
 }

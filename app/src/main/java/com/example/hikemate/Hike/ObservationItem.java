@@ -1,4 +1,4 @@
-package com.example.hikemate.Observation;
+package com.example.hikemate.Hike;
 
 import static com.example.hikemate.Observation.ObservationDetail.OBSERVATION_KEY;
 
@@ -8,27 +8,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import com.bumptech.glide.Glide;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.hikemate.Converter.TimeConverter;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Observation;
+import com.example.hikemate.Observation.ObservationDetail;
 import com.example.hikemate.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 
-
 import java.util.ArrayList;
 
-public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.ViewHolder>{
+public class ObservationItem extends RecyclerView.Adapter<ObservationItem.ViewHolder>{
     private ArrayList<Observation> observationArrayList = new ArrayList<>();
     private Context context;
     private HikeDatabase db;
 
-    public ObservationAdapter(ArrayList<Observation> observationArrayList, Context context) {
+    public ObservationItem(ArrayList<Observation> observationArrayList, Context context) {
         this.observationArrayList = observationArrayList;
         this.context = context;
     }
@@ -36,18 +36,17 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_observation_adapter, parent, false);
-        return new ObservationAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.observation_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ObservationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ObservationItem.ViewHolder holder, int position) {
         db = HikeDatabase.getInstance(context);
         Observation item = observationArrayList.get(position);
 
-        holder.txtObservationName.setText(item.getName());
-        holder.txtValueComment.setText(item.getAdditionalComment());
-        holder.txtValueObservationTime.setText(TimeConverter.formattedDate(item.getTimeObservation()));
+        holder.txtName.setText(item.getName());
+        holder.txtDate.setText(TimeConverter.formattedDate(item.getTimeObservation()));
 
 
         Glide.with(context)
@@ -55,7 +54,7 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
                 .load(db.observationImageDao().getObservationImageById(observationArrayList.get(position).getId()).getData())
                 .placeholder(R.drawable.baseline_restart_alt_24)
                 .error(R.drawable.baseline_error_outline_24)
-                .into(holder.imageObservation);
+                .into(holder.image);
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,19 +72,17 @@ public class ObservationAdapter extends RecyclerView.Adapter<ObservationAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ShapeableImageView imageObservation;
-        private TextView txtObservationName, txtValueObservationTime, txtValueComment;
+        private ShapeableImageView image;
+        private TextView txtName, txtDate;
         private MaterialCardView parent;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageObservation = itemView.findViewById(R.id.imageObservation);
-            txtObservationName = itemView.findViewById(R.id.txtObservationName);
-            txtValueObservationTime = itemView.findViewById(R.id.txtValueObservationTime);
-            txtValueComment = itemView.findViewById(R.id.txtValueComment);
+            image = itemView.findViewById(R.id.image);
+            txtName = itemView.findViewById(R.id.txtName);
+            txtDate = itemView.findViewById(R.id.txtDate);
             parent = itemView.findViewById(R.id.parent);
         }
     }
-
 }

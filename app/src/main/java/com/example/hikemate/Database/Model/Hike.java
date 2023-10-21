@@ -10,6 +10,9 @@ import android.os.Parcelable;
 
 import com.example.hikemate.Database.Model.Hike;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(tableName = "hike")
 public class Hike implements Parcelable{
     @PrimaryKey(autoGenerate = true)
@@ -47,6 +50,9 @@ public class Hike implements Parcelable{
         length = in.readDouble();
         difficulty = in.readInt();
         description = in.readString();
+
+        observations = new ArrayList<>();
+        in.readTypedList(observations, Observation.CREATOR);
     }
     @Ignore
     public static final Creator<Hike> CREATOR = new Creator<Hike>() {
@@ -159,5 +165,29 @@ public class Hike implements Parcelable{
         parcel.writeDouble(length);
         parcel.writeInt(difficulty);
         parcel.writeString(description);
+        parcel.writeTypedList(observations);
     }
+
+    @Ignore
+    protected List<Observation> observations;
+
+    public Hike() {
+        observations = new ArrayList<>();
+    }
+
+    public List<Observation> getObservations() {
+        return observations;
+    }
+
+    public void setObservations(List<Observation> observations) {
+        this.observations = observations;
+    }
+
+    public void addObservation(Observation observation) {
+        if (observation.getId() != 0) {
+            observations.add(observation);
+        }
+    };
+
+
 }

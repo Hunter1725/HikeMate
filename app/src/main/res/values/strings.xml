@@ -61,4 +61,5 @@
     <string name="observation_name">Observation Name</string>
     <string name="observation_time">Observation Time</string>
     <string name="additional_comments">Additional Comments</string>
+    <string name="view_all">View All</string>
 </resources>

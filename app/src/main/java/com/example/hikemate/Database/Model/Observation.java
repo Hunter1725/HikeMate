@@ -13,16 +13,20 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "observation",
         foreignKeys = {@ForeignKey(entity = Hike.class, parentColumns = "id", childColumns = "hike_id", onDelete = ForeignKey.CASCADE)})
 public class Observation implements Parcelable {
-
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     @ColumnInfo(name = "hike_id")
     private int hikeId;
-
     private String name;
     private Long timeObservation;
     private String additionalComment;
+
+    @Ignore
+    public Observation(int hikeId, String name, Long timeObservation) {
+        this.hikeId = hikeId;
+        this.name = name;
+        this.timeObservation = timeObservation;
+    }
 
     public Observation(int hikeId, String name, Long timeObservation, String additionalComment) {
         this.hikeId = hikeId;

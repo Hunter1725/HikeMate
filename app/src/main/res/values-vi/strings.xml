@@ -58,4 +58,5 @@
     <string name="observation_name">Tên Quan Sát</string>
     <string name="observation_time">Thời Gian Quan Sát</string>
     <string name="additional_comments">Ghi chú bổ sung</string>
+    <string name="view_all">Xem tất cả</string>
 </resources>

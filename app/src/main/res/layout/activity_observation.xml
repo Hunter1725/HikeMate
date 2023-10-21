@@ -202,7 +202,7 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textImage"
-                    app:shapeAppearanceOverlay="@style/RoundedImageViewShape2" />
+                    app:shapeAppearanceOverlay="@style/RoundedImageViewShape" />
 
                 <Button
                     android:id="@+id/btnSelectImage"

@@ -1,44 +1,26 @@
 package com.example.hikemate.Observation;
 
-import static com.example.hikemate.Hike.HikeDetail.HIKE_KEY;
+import static com.example.hikemate.Hike.HikeDetail.HIKE_ID;
 import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
-import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
-import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
-import static com.example.hikemate.WeatherForecast.WeatherActivity.REQUEST_CHECK_SETTINGS;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageOptions;
@@ -46,45 +28,24 @@ import com.example.hikemate.Database.Dao.ObservationDao;
 import com.example.hikemate.Database.Dao.ObservationImageDao;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
-import com.example.hikemate.Database.Model.HikeImage;
 import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.Database.Model.ObservationImage;
-import com.example.hikemate.Hike.HikeActivity;
 import com.example.hikemate.Hike.HikeDetail;
-import com.example.hikemate.Hike.HikeList;
 import com.example.hikemate.MainActivity;
-import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.R;
-import com.example.hikemate.WeatherForecast.WeatherActivity;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.Priority;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import com.canhub.cropper.CropImageContractOptions;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ObservationActivity extends AppCompatActivity {
@@ -99,10 +60,8 @@ public class ObservationActivity extends AppCompatActivity {
     private Long date;
     private TextView txtWarning, btnOpenMap;
     private MaterialDatePicker<Long> datePicker;
-    private boolean parkingAvailable = true;
     private MaterialToolbar toolbarCreateObservation;
     private CircularProgressIndicator progressCalculate;
-    private LatLng incomingLatlng;
     private Hike incomingHike;
 
     private ObservationDao observationDao;
@@ -128,8 +87,18 @@ public class ObservationActivity extends AppCompatActivity {
         observationImageDao = db.observationImageDao();
 
         Intent intent = getIntent();
-        incomingHike = intent.getParcelableExtra(HIKE_KEY);
+        incomingHike = intent.getParcelableExtra(HIKE_ID);
+
+
+
+
+        long todayInMillis = MaterialDatePicker.todayInUtcMilliseconds();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+        String todayDate = dateFormat.format(new Date(todayInMillis));
+        edtObservationTime.setText(todayDate);
+        date = todayInMillis;
     }
+
     private void initImagePickerNew() {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             // Callback is invoked after the user selects a media item or closes the
@@ -151,7 +120,7 @@ public class ObservationActivity extends AppCompatActivity {
                 } else {
                     // Image size exceeds the threshold, handle accordingly (e.g., show an error message)
                     Log.d("PhotoPicker", "Selected image size exceeds the threshold.");
-                    Toast.makeText(this, "The image is to large! Please select another!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "The image is too large! Please select another.", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Log.d("PhotoPicker", "No media selected");
@@ -193,7 +162,6 @@ public class ObservationActivity extends AppCompatActivity {
                 .setCalendarConstraints(constraints)
                 .setTheme(R.style.ThemeOverlay_App_DatePicker)
                 .build();
-
 
         edtObservationTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -240,8 +208,6 @@ public class ObservationActivity extends AppCompatActivity {
         btnSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                imagePickerLauncher.launch(intent);
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
@@ -283,8 +249,6 @@ public class ObservationActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     private void save() {
@@ -301,11 +265,11 @@ public class ObservationActivity extends AppCompatActivity {
             Toast.makeText(this, "Please select an image!", Toast.LENGTH_LONG).show();
         } else {
             txtWarning.setVisibility(View.GONE);
-            long hikeId = incomingHike.getId();
-            long currentTimeMillis = System.currentTimeMillis();
-            long id = observationDao.insert(new Observation((int) hikeId, observationName, date, comments));
+            int hikeId = incomingHike.getId();
+            long id = observationDao.insert(new Observation(hikeId, observationName, date, comments));
             observationImageDao.insertImage(new ObservationImage(bitmapImageHike, (int) id));
             Toast.makeText(this, "Successfully added the Observation with ID: " + id, Toast.LENGTH_SHORT).show();
+            onBackPressed();
             edtObservation.setText("");
             edtObservationTime.setText("");
             edtComment.setText("");
@@ -313,7 +277,6 @@ public class ObservationActivity extends AppCompatActivity {
             imageObservation.setVisibility(View.GONE);
         }
     }
-
 
     private void initView() {
         textInputLayoutObservation = findViewById(R.id.textInputLayoutObservation);
@@ -352,9 +315,7 @@ public class ObservationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(ObservationActivity.this, MainActivity.class);
-        intent.putExtra(SHOW_FRAGMENT, "hikeListFragment"); // Pass a unique identifier for the fragment
-        startActivity(intent);
     }
+
 
 }

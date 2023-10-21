@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.hikemate.Database.Model.Hike;
+import com.example.hikemate.Database.Model.Observation;
 
 import java.util.List;
 
@@ -26,4 +27,7 @@ public interface HikeDao {
 
     @Query("SELECT * FROM hike WHERE hikeName LIKE :searchQuery")
     List<Hike> searchHikesByName(String searchQuery);
+
+    @Query("SELECT * FROM hike WHERE id = :hikeId")
+    Hike getHikeById(int hikeId);
 }

@@ -8,6 +8,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.WindowCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,6 +34,7 @@ import com.example.hikemate.Converter.TimeConverter;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.MainActivity;
 import com.example.hikemate.Observation.ObservationActivity;
 import com.example.hikemate.Observation.ObservationList;
@@ -45,19 +48,22 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HikeDetail extends AppCompatActivity {
 
     public static final String HIKE_KEY = "hike_key";
+    public static final String HIKE_ID = "HikeId";
     private HikeDatabase db;
     private ConstraintLayout imageLayout;
     private TextInputLayout textInputLayoutHikeName, textInputLayoutHikeLength, textInputLayoutHikeDate, textInputLayoutLocation, textInputLayoutDescription;
     private TextInputEditText edtHikeName, edtHikeLength, edtDoH, edtLocation, edtDescription;
     private RadioGroup radioDifficulty, radioParkingAvailable;
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
-    private ShapeableImageView imageHike, iconCamera;
+    private ShapeableImageView imageHike;
     private Button btnSelectImage, btnCancel, btnViewHikeList, btnSave, btnCreateObservation, btnViewObservation;
     private TextView txtHikeName;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
@@ -71,6 +77,9 @@ public class HikeDetail extends AppCompatActivity {
     private int difficulty;
     private boolean parkingAvailable;
     private MaterialToolbar toolbarHike;
+    private RecyclerView recyclerViewObservation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +93,11 @@ public class HikeDetail extends AppCompatActivity {
         initializeDatePicker();
         initListener();
         initImagePickerNew();
+
     }
+
+
+    private void setupObservationListUI() {}
     private void initImagePickerNew() {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             // Callback is invoked after the user selects a media item or closes the
@@ -123,18 +136,21 @@ public class HikeDetail extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        assignData();
+    }
+
+
     private void initializeDatePicker() {
         // Get today's date in milliseconds
         long todayInMillis = MaterialDatePicker.todayInUtcMilliseconds();
-
-        // Set a custom maximum date (e.g., 7 days from today)
-        long customMaxDateInMillis = todayInMillis - (7 * 24 * 60 * 60 * 1000);
 
         // Create a CalendarConstraints.Builder
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
 
         // Set a DateValidator using DateValidatorPointBackward.now()
-        constraintsBuilder.setValidator(DateValidatorPointBackward.before(customMaxDateInMillis));
         constraintsBuilder.setEnd(todayInMillis);
 
         // Build the CalendarConstraints
@@ -208,16 +224,20 @@ public class HikeDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HikeDetail.this, ObservationList.class);
-                intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
+                intent.putExtra(HIKE_ID, incomingHike);
                 startActivity(intent);
             }
         });
+
         btnCreateObservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HikeDetail.this, ObservationActivity.class));
+                Intent intent = new Intent(HikeDetail.this, ObservationActivity.class);
+                intent.putExtra(HIKE_ID, incomingHike);
+                startActivity(intent);
             }
         });
+
 
         edtHikeName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -324,6 +344,7 @@ public class HikeDetail extends AppCompatActivity {
             Toast.makeText(this, "Successful updated! ", Toast.LENGTH_SHORT).show();
             assignData();
 
+
         }
 
     }
@@ -365,6 +386,11 @@ public class HikeDetail extends AppCompatActivity {
                         .into(imageHike);
                 bitmapImageHike = hikeImage.getData();
                 date = incomingHike.getDate();
+                //init RecycleViewObservation
+                ArrayList<Observation> observationList = (ArrayList<Observation>) db.observationDao().getObservationsForHike(incomingHike.getId());
+                ObservationItem observationItem = new ObservationItem(observationList, HikeDetail.this);
+                recyclerViewObservation.setAdapter(observationItem);
+                recyclerViewObservation.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));
             }
         }
     }
@@ -409,6 +435,7 @@ public class HikeDetail extends AppCompatActivity {
         btnViewHikeList = findViewById(R.id.btnViewHikeList);
         btnViewObservation = findViewById(R.id.btnViewObservation);
         btnCreateObservation = findViewById(R.id.btnCreateObservation);
+        recyclerViewObservation = findViewById(R.id.recyclerViewObservation);
 
         txtWarning = findViewById(R.id.txtWarning);
         toolbarHike = findViewById(R.id.toolbarHike);
@@ -417,9 +444,17 @@ public class HikeDetail extends AppCompatActivity {
         txtHikeName = findViewById(R.id.txtHikeName);
         imageLayout = findViewById(R.id.imageLayout);
         imageHike = findViewById(R.id.imageHike);
-        iconCamera = findViewById(R.id.iconCamera);
 
 
         db = HikeDatabase.getInstance(HikeDetail.this);
     }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
 }

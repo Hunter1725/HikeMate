@@ -1,5 +1,7 @@
 package com.example.hikemate.Observation;
 
+import static com.example.hikemate.Hike.HikeDetail.HIKE_ID;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.Database.Model.ObservationImage;
 import com.example.hikemate.R;
@@ -46,6 +49,7 @@ public class ObservationList extends AppCompatActivity {
     private Button btnCreateObservation;
     private Observation deletedObservation;
     private ObservationImage deletedObservationImage;
+    private Hike incomingHike;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,8 @@ public class ObservationList extends AppCompatActivity {
         setContentView(R.layout.activity_observation_list);
         getSupportActionBar().hide();
         initView();
-
+        Intent intent = getIntent();
+        incomingHike = intent.getParcelableExtra(HIKE_ID);
         initRecyclerview();
     }
 
@@ -144,7 +149,7 @@ public class ObservationList extends AppCompatActivity {
         Glide.get(ObservationList.this).setMemoryCategory(MemoryCategory.HIGH);
         db = HikeDatabase.getInstance(ObservationList.this);
 
-        observationArrayList = (ArrayList<Observation>) db.observationDao().getAllObservation();
+        observationArrayList = (ArrayList<Observation>) db.observationDao().getObservationsForHike(incomingHike.getId());
 
         if(observationArrayList.isEmpty()){
             txtEmpty.setVisibility(View.VISIBLE);
