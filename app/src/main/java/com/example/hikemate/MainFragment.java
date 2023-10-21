@@ -116,14 +116,14 @@ public class MainFragment extends Fragment implements NetworkUtils.OnConnectivit
                 String weatherRecommend = "";
                 if (weather.getMain().equals("Rain") || weather.getMain().equals("Thunderstorm")) {
                     if (weather.getHumidity() > 80 || weather.getSpeed() > 15) {
-                        weatherRecommend = "Do something";
+                        weatherRecommend = getString(R.string.go_hike);
                         txtWeatherRecommend.setText(weatherRecommend);
                     } else {
-                        weatherRecommend = "Do everything";
+                        weatherRecommend = getString(R.string.go_hike);
                         txtWeatherRecommend.setText(weatherRecommend);
                     }
                 } else {
-                    weatherRecommend = "Nothing";
+                    weatherRecommend = getString(R.string.go_hike);
                     txtWeatherRecommend.setText(weatherRecommend);
                 }
             }

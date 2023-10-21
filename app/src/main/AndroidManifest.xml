@@ -26,6 +26,15 @@
             android:name=".Observation.ObservationAdapter"
             android:exported="false" />
         <activity
+            android:name=".Setting.WebsiteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hike.ConfirmActivity"
+            android:exported="false" />
+        <activity
             android:name=".Observation.ObservationDetail"
             android:exported="false" />
         <activity

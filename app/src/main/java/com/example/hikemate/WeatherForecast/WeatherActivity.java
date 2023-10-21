@@ -196,10 +196,10 @@ public class WeatherActivity extends AppCompatActivity {
                 txtEmpty.setVisibility(View.GONE);
                 txtDayTip.setText(CalendarUtils.formattedFullWeek(getLocalDateTimeFromTimestamp((long) d.getDt())));
                 if (d.getHumidity() > 80 || d.getSpeed() > 15) {
-                    tipRecommend = "Do something";
+                    tipRecommend = getString(R.string.go_hike);
                     txtDayRecommend.setText(tipRecommend);
                 } else {
-                    tipRecommend = "Do everything";
+                    tipRecommend = getString(R.string.go_hike);
                     txtDayRecommend.setText(tipRecommend);
                 }
                 break;
@@ -208,7 +208,7 @@ public class WeatherActivity extends AppCompatActivity {
         if (tipRecommend.isEmpty()){
             tinyTipLayout.setVisibility(View.GONE);
             txtEmpty.setVisibility(View.VISIBLE);
-            txtEmpty.setText("No tips for the next 4 days");
+            txtEmpty.setText(R.string.no_tips_for_the_next_4_days);
         }
     }
 
@@ -237,9 +237,9 @@ public class WeatherActivity extends AppCompatActivity {
             }
         }
         if (rainForecast == null){
-            txtRainForecast.setText("No rain forecast in the next 4 days");
+            txtRainForecast.setText(R.string.no_rain_forecast_in_the_next_4_days);
         } else {
-            txtRainForecast.setText("It is raining this " + rainForecast.toString());
+            txtRainForecast.setText(getString(R.string.it_is_raining_this) + rainForecast.toString());
         }
     }
 
@@ -287,14 +287,14 @@ public class WeatherActivity extends AppCompatActivity {
             String weatherRecommend = "";
             if (weatherData.getWeather().get(0).getMain().equals("Rain") || weatherData.getWeather().get(0).getMain().equals("Thunderstorm")) {
                 if(weatherData.getHumidity() > 80 || weatherData.getSpeed() > 15) {
-                    weatherRecommend = "Do something";
+                    weatherRecommend = getString(R.string.go_hike);
                     txtWeatherRecommend.setText(weatherRecommend);
                 } else {
-                    weatherRecommend = "Do everything else";
+                    weatherRecommend = getString(R.string.go_hike);
                     txtWeatherRecommend.setText(weatherRecommend);
                 }
             } else {
-                weatherRecommend = "Nothing";
+                weatherRecommend = getString(R.string.go_hike);
                 txtWeatherRecommend.setText(weatherRecommend);
             }
 
@@ -527,7 +527,7 @@ public class WeatherActivity extends AppCompatActivity {
             selectedUnitIndex = 1;
         }
         MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_App_MaterialAlertDialog2);
-        dialogBuilder.setTitle("Choose temperature unit")
+        dialogBuilder.setTitle(getString(R.string.chose_temperature_unit))
                 .setSingleChoiceItems(temperatureUnits, selectedUnitIndex, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

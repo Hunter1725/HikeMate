@@ -6,17 +6,17 @@
 
         <item
             android:id="@+id/planning_items"
-            android:title="Planning">
+            android:title="Hike">
             <menu>
                 <item
                     android:id="@+id/allPlan"
-                    android:title="All plan"
+                    android:title="All hike"
                     android:icon="@drawable/plan"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/newPlan"
-                    android:title="New plan"
+                    android:title="New hike"
                     android:icon="@drawable/new_plan"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
@@ -24,19 +24,51 @@
         </item>
 
         <item
-            android:id="@+id/calculating"
-            android:title="Calculating">
+            android:id="@+id/chat"
+            android:title="Chat supporter">
             <menu>
                 <item
-                    android:id="@+id/pesticide"
+                    android:id="@+id/chatSupporter"
                     android:icon="@drawable/chat"
-                    android:title="Pesticide"
+                    android:title="Chat supporter"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/weatherForecast"
+            android:title="Weather forecast">
+            <menu>
+                <item
+                    android:id="@+id/weather"
+                    android:icon="@drawable/ic_weather"
+                    android:title="Weather forecast"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom" />
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/others"
+            android:title="Other">
+            <menu>
+                <item
+                    android:id="@+id/setting"
+                    android:icon="@drawable/ic_setting"
+                    android:title="Setting"
+                    android:checkable="true"
+                    app:showAsAction="ifRoom"/>
+                <item
+                    android:id="@+id/term"
+                    android:icon="@drawable/ic_license"
+                    android:title="Terms of condition"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
                 <item
-                    android:id="@+id/fertilizer"
-                    android:icon="@drawable/home"
-                    android:title="Fertilizer"
+                    android:id="@+id/licence"
+                    android:icon="@drawable/ic_privacy"
+                    android:title="Privacy policy"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
             </menu>

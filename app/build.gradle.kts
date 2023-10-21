@@ -65,6 +65,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
+    //Palette
+    implementation ("androidx.palette:palette-ktx:1.0.0")
+
     //Gson
     implementation ("com.google.code.gson:gson:2.10.1")
 

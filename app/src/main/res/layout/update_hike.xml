@@ -260,6 +260,23 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/btnOpenMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Open Map"
+                    android:textColor="@color/green6"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_image"
+                    android:drawablePadding="5dp"
+                    app:iconTint="@color/green4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLocation"
+                    app:drawableStartCompat="@drawable/ic_map"
+                    app:drawableTint="@color/green6" />
+
+                <TextView
                     android:id="@+id/textDifficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -267,7 +284,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutLocation"/>
+                    app:layout_constraintTop_toBottomOf="@+id/btnOpenMap"/>
 
 
                 <RadioGroup
@@ -285,7 +302,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/easy"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        style="@style/Widget.App.RadioButton" />
 
                     <RadioButton
                         android:id="@+id/btnModerate"
@@ -293,14 +311,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:text="@string/moderate"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        style="@style/Widget.App.RadioButton" />
                     <RadioButton
                         android:id="@+id/btnDifficult"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:text="@string/difficult"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        style="@style/Widget.App.RadioButton" />
 
                 </RadioGroup>
 
@@ -370,7 +390,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/yes"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        style="@style/Widget.App.RadioButton"/>
 
                     <RadioButton
                         android:id="@+id/btnParkingUnavailable"
@@ -378,7 +399,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="40dp"
                         android:text="@string/no"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        style="@style/Widget.App.RadioButton"/>
                 </RadioGroup>
 
                 <TextView

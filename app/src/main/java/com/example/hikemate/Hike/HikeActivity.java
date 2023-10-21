@@ -1,5 +1,6 @@
 package com.example.hikemate.Hike;
 
+import static com.example.hikemate.Hike.HikeDetail.HIKE_KEY;
 import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
 import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
 import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
@@ -39,8 +40,10 @@ import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageOptions;
+import com.example.hikemate.Converter.TimeConverter;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
@@ -80,13 +83,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class HikeActivity extends AppCompatActivity {
+    public static final String HIKE_IMAGE = "hike_image";
     private HikeDatabase db;
     private TextInputLayout textInputLayoutHikeName, textInputLayoutHikeLength, textInputLayoutHikeDate, textInputLayoutLocation, textInputLayoutDescription;
     private TextInputEditText edtHikeName, edtHikeLength, edtDoH, edtLocation, edtDescription;
     private RadioGroup radioDifficulty, radioParkingAvailable;
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
     private ShapeableImageView imgHike;
-    private Button btnSelectImage, btnClear, btnViewHikeList, btnCreate;
+    private Button btnSelectImage, btnClear, btnCreate;
     private FusedLocationProviderClient fusedLocationClient;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
@@ -99,6 +103,8 @@ public class HikeActivity extends AppCompatActivity {
     private MaterialToolbar toolbarCreateHike;
     private CircularProgressIndicator progressCalculate;
     private LatLng incomingLatlng;
+    private Hike incomingHike;
+    private HikeImage hikeImage;
 
 
     @Override
@@ -109,6 +115,8 @@ public class HikeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         initView();
+
+        assignData();
 
         initListener();
 
@@ -125,7 +133,49 @@ public class HikeActivity extends AppCompatActivity {
             } else {
                 requestLocationUpdates();
                 fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-                Toast.makeText(this, "Getting your location!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void assignData() {
+        Intent intent = getIntent();
+        if(intent != null) {
+            incomingHike = intent.getParcelableExtra(HIKE_KEY);
+            if (incomingHike != null) {
+                hikeImage = intent.getParcelableExtra(HIKE_IMAGE);
+                edtHikeName.setText(incomingHike.getHikeName());
+                String length = String.valueOf(incomingHike.getLength());
+                edtHikeLength.setText(length);
+                if(incomingHike.getDate() != null)
+                    edtDoH.setText(TimeConverter.formattedDate(incomingHike.getDate()));
+                edtLocation.setText(incomingHike.getLocation());
+                edtDescription.setText(incomingHike.getDescription());
+                parkingAvailable = incomingHike.isParkingAvailable();
+                difficulty = incomingHike.getDifficulty();
+                if(difficulty == 1){
+                    btnEasy.setChecked(true);
+                }else if (difficulty == 2){
+                    btnModerate.setChecked(true);
+                }else{
+                    btnDifficult.setChecked(true);
+                }
+                if(parkingAvailable == true){
+                    btnParkingAvailable.setChecked(true);
+                }else {
+                    btnParkingUnavailable.setChecked(true);
+                }
+
+                if(hikeImage.getData() != null) {
+                    imgHike.setVisibility(View.VISIBLE);
+                    Glide.with(HikeActivity.this)
+                            .asBitmap()
+                            .load(hikeImage.getData())
+                            .placeholder(R.drawable.baseline_restart_alt_24)
+                            .error(R.drawable.baseline_error_outline_24)
+                            .into(imgHike);
+                }
+                bitmapImageHike = hikeImage.getData();
+                date = incomingHike.getDate();
             }
         }
     }
@@ -227,6 +277,7 @@ public class HikeActivity extends AppCompatActivity {
             // Permissions are already granted, proceed with requesting location updates
             LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000).build();
             progressCalculate.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Getting your location!", Toast.LENGTH_LONG).show();
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
         } else {
@@ -286,7 +337,7 @@ public class HikeActivity extends AppCompatActivity {
                 long imageSize = getImageSize(uri);
                 long threshold = 1024 * 1024; // 1 MB threshold
 
-                if (imageSize <= threshold) {
+                if (imageSize < threshold) {
                     // Image size is within the threshold, proceed with cropping
                     CropImageOptions cropImageOptions = new CropImageOptions();
                     cropImageOptions.imageSourceIncludeGallery = true;
@@ -338,7 +389,6 @@ public class HikeActivity extends AppCompatActivity {
         datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .setCalendarConstraints(constraints)
                 .setTheme(R.style.ThemeOverlay_App_DatePicker)
                 .build();
 
@@ -381,7 +431,7 @@ public class HikeActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                save();
+                confirm();
             }
         });
 
@@ -393,13 +443,6 @@ public class HikeActivity extends AppCompatActivity {
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
-            }
-        });
-
-        btnViewHikeList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HikeActivity.this, HikeList.class));
             }
         });
 
@@ -487,51 +530,72 @@ public class HikeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HikeActivity.this, MapsActivity.class);
-                intent.putExtra("activity", "second");
+                intent.putExtra("activity","second");
+                String hikeName = "";
+                String location = "";
+                double length = 0;
+                String description= "";
+                if (!edtHikeName.getText().toString().isEmpty()) {
+                    hikeName = edtHikeName.getText().toString();
+                }
+                if (!edtHikeLength.getText().toString().isEmpty()) {
+                    length = Double.parseDouble(edtHikeLength.getText().toString());
+                }
+                if (!edtLocation.getText().toString().isEmpty()) {
+                    location = edtLocation.getText().toString();
+                }
+                if (!edtDescription.getText().toString().isEmpty()) {
+                    description= edtDescription.getText().toString();
+                }
+                Hike hike = new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description);
+                HikeImage hikeImage = new HikeImage(bitmapImageHike);
+                intent.putExtra(HIKE_KEY, hike);
+                intent.putExtra(HIKE_IMAGE, hikeImage);
                 startActivity(intent);
             }
         });
 
     }
 
-    private void save() {
+    private void confirm(){
         if (edtHikeName.getText().toString().isEmpty()) {
             textInputLayoutHikeName.setError("Please enter the Hike name!");
             Toast.makeText(this, "Please enter the Hike name!", Toast.LENGTH_SHORT).show();
-        } else if (edtHikeLength.getText().toString().isEmpty()) {
+        }else if (edtHikeLength.getText().toString().isEmpty()) {
             textInputLayoutHikeLength.setError("Please enter the length of Hike!");
             Toast.makeText(this, "Please enter the length of Hike!", Toast.LENGTH_SHORT).show();
-        } else if (edtDoH.getText().toString().isEmpty()) {
+        }else if (edtDoH.getText().toString().isEmpty()) {
             textInputLayoutHikeDate.setError("Please select the date of Hike!");
             Toast.makeText(this, "Please select the date of Hike!", Toast.LENGTH_SHORT).show();
-        } else if (edtLocation.getText().toString().isEmpty()) {
+        }else if (edtLocation.getText().toString().isEmpty()) {
             textInputLayoutLocation.setError("Please select the location!");
             Toast.makeText(this, "Please select the location!", Toast.LENGTH_SHORT).show();
-        } else if (edtDescription.getText().toString().isEmpty()) {
+        }else if (edtDescription.getText().toString().isEmpty()) {
             textInputLayoutDescription.setError("Please select the description!");
             Toast.makeText(this, "Please select the description!", Toast.LENGTH_SHORT).show();
         } else if (bitmapImageHike == null) {
             txtWarning.setVisibility(View.VISIBLE);
             Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
-        } else {
+        }else{
             txtWarning.setVisibility(View.GONE);
             String hikeName = edtHikeName.getText().toString();
             String location = edtLocation.getText().toString();
             double length = Double.parseDouble(edtHikeLength.getText().toString());
-            String description = edtDescription.getText().toString();
-            long id = db.hikeDao().insert(new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description));
-            db.hikeImageDao().insertImage(new HikeImage(bitmapImageHike, (int) id));
-            Toast.makeText(this, "Successful added the Hike with ID: " + id, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HikeActivity.this, MainActivity.class);
-            intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
+            String description= edtDescription.getText().toString();
+            Hike hike = new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description);
+            HikeImage hikeImage = new HikeImage(bitmapImageHike);
+
+            Intent intent = new Intent(HikeActivity.this, ConfirmActivity.class);
+            intent.putExtra(HIKE_KEY, hike);
+            intent.putExtra(HIKE_IMAGE, hikeImage);
             startActivity(intent);
-            edtHikeName.setText("");
-            edtLocation.setText("");
-            edtHikeLength.setText("");
-            edtDoH.setText("");
-            edtDescription.setText("");
-            bitmapImageHike = null;
-            imgHike.setVisibility(View.GONE);
+//            edtHikeName.setText("");
+//            edtLocation.setText("");
+//            edtHikeLength.setText("");
+//            edtDoH.setText("");
+//            edtDescription.setText("");
+//            bitmapImageHike=null;
+//            imgHike.setVisibility(View.GONE);
         }
 
     }
@@ -558,7 +622,6 @@ public class HikeActivity extends AppCompatActivity {
         imgHike = findViewById(R.id.imgHike);
         btnSelectImage = findViewById(R.id.btnSelectImage);
         btnClear = findViewById(R.id.btnClear);
-        btnViewHikeList = findViewById(R.id.btnViewHikeList);
         btnCreate = findViewById(R.id.btnCreate);
         btnOpenMap = findViewById(R.id.btnOpenMap);
         txtWarning = findViewById(R.id.txtWarning);

@@ -27,11 +27,14 @@ import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Hike.HikeList;
 import com.example.hikemate.Maps.MapsActivity;
+import com.example.hikemate.Setting.SettingActivity;
+import com.example.hikemate.Setting.WebsiteActivity;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.example.hikemate.Hike.HikeActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private HikeDatabase db;
     private NestedScrollView nestedScrollView;
+    private FloatingActionButton fabScrollToTop;
 
     private Button testButton, anotherTestButton, skillTestButton;
 
@@ -92,9 +96,27 @@ public class MainActivity extends AppCompatActivity {
 
                 if (itemId == R.id.allPlan) {
                     // Handle "All plans" item selection
-                    startActivity(new Intent(MainActivity.this, WeatherActivity.class));
+                    replaceFragment(new HikeList());
+                    bottomNavigationView.setSelectedItemId(R.id.hikeBottom);
+
                 } else if (itemId == R.id.newPlan) {
-                    startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                    startActivity(new Intent(MainActivity.this, HikeActivity.class));
+                } else if (itemId == R.id.chatSupporter) {
+                    startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                } else if (itemId == R.id.weather) {
+                    startActivity(new Intent(MainActivity.this, WeatherActivity.class));
+                } else if (itemId == R.id.setting) {
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                } else if (itemId == R.id.term) {
+                    Intent intent = new Intent(MainActivity.this, WebsiteActivity.class);
+                    String message = "https://www.freeprivacypolicy.com/live/fba53041-2e38-458d-b06e-93185d3ad3f4";
+                    intent.putExtra("TERMS_KEY", message);
+                    startActivity(intent);
+                } else if (itemId == R.id.licence) {
+                    Intent intent = new Intent(MainActivity.this, WebsiteActivity.class);
+                    String message = "https://www.freeprivacypolicy.com/live/69dd2b30-6786-442a-922c-3d06b24ffd5e";
+                    intent.putExtra("PRIVACY_KEY", message);
+                    startActivity(intent);
                 }
                 return false;
             }
@@ -121,6 +143,34 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        fabScrollToTop.hide();
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // Check the scroll position
+                if (scrollY == 0) {
+                    // Scroll is at the top, hide the FloatingActionButton
+                    fabScrollToTop.hide();
+                } else if (scrollY > oldScrollY) {
+                    // Scrolling downwards, hide the FloatingActionButton
+                    fabScrollToTop.hide();
+                } else {
+                    // Scrolling upwards, show the FloatingActionButton
+                    fabScrollToTop.show();
+                }
+            }
+        });
+
+        //FAB scroll up
+        // Set an OnClickListener for the FloatingActionButton
+        fabScrollToTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Scroll to the top of the NestedScrollView
+                nestedScrollView.smoothScrollTo(0, 0);
+            }
+        });
     }
 
     private void initView() {
@@ -129,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomNavView);
         nestedScrollView = findViewById(R.id.nestedScrollView);
+        fabScrollToTop = findViewById(R.id.fabScrollToTop);
         db = HikeDatabase.getInstance(MainActivity.this);
         replaceFragment(new MainFragment());
     }
@@ -154,16 +205,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // No remaining fragments, show exit confirmation dialog
             new MaterialAlertDialogBuilder(this, R.style.ThemeOverlay_App_MaterialAlertDialog2)
-                    .setTitle("Exit")
-                    .setMessage("Are you sure you want to exit the app?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.exit)
+                    .setMessage(R.string.are_you_sure_you_want_to_exit_the_app)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // Exit the app
                             finishAffinity();
                         }
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton(R.string.no, null)
                     .show();
         }
     }

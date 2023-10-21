@@ -1,6 +1,7 @@
 package com.example.hikemate.Hike;
 
 import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
+import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -15,6 +16,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -34,11 +37,15 @@ import com.example.hikemate.Converter.TimeConverter;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.MainActivity;
 import com.example.hikemate.Observation.ObservationActivity;
 import com.example.hikemate.Observation.ObservationList;
 import com.example.hikemate.R;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
@@ -47,6 +54,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,9 +71,10 @@ public class HikeDetail extends AppCompatActivity {
     private TextInputEditText edtHikeName, edtHikeLength, edtDoH, edtLocation, edtDescription;
     private RadioGroup radioDifficulty, radioParkingAvailable;
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
-    private ShapeableImageView imageHike;
-    private Button btnSelectImage, btnCancel, btnViewHikeList, btnSave, btnCreateObservation, btnViewObservation;
-    private TextView txtHikeName;
+    private ShapeableImageView imageHike, iconCamera;
+    private Button btnSelectImage, btnCancel, btnSave;
+    private TextView txtHikeName, btnOpenMap;
+    private Button  btnCreateObservation, btnViewObservation;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
     private Bitmap bitmapImageHike;
@@ -77,6 +86,7 @@ public class HikeDetail extends AppCompatActivity {
     private int difficulty;
     private boolean parkingAvailable;
     private MaterialToolbar toolbarHike;
+    private LatLng incomingLatlng;
     private RecyclerView recyclerViewObservation;
 
 
@@ -160,7 +170,6 @@ public class HikeDetail extends AppCompatActivity {
         datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
                 .setSelection(incomingHike.getDate())
-                .setCalendarConstraints(constraints)
                 .setTheme(R.style.ThemeOverlay_App_DatePicker)
                 .build();
 
@@ -306,6 +315,16 @@ public class HikeDetail extends AppCompatActivity {
                 }
             }
         });
+
+        btnOpenMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HikeDetail.this, MapsActivity.class);
+                intent.putExtra("activity","third");
+                intent.putExtra(HIKE_KEY, incomingHike);
+                startActivity(intent);
+            }
+        });
     }
 
     private void save(){
@@ -343,7 +362,6 @@ public class HikeDetail extends AppCompatActivity {
             db.hikeImageDao().updateImage(hikeImage);
             Toast.makeText(this, "Successful updated! ", Toast.LENGTH_SHORT).show();
             assignData();
-
 
         }
 
@@ -392,7 +410,32 @@ public class HikeDetail extends AppCompatActivity {
                 recyclerViewObservation.setAdapter(observationItem);
                 recyclerViewObservation.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));
             }
+
+            //Get Longitude and latitude
+            incomingLatlng = intent.getParcelableExtra(LATLNG_KEY);
+            if (incomingLatlng != null) {
+                edtLocation.setText(getNameLocation(incomingLatlng));
+            }
         }
+    }
+
+    private String getNameLocation(LatLng latLng) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String addressText = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+            if (!addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                addressText = address.getAddressLine(0); // Get the full address
+
+                // Print or display the location name and address
+                Log.d("LocationInfo", "Address: " + addressText);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return addressText;
     }
 
     // Helper method to get the size of an image file given its URI
@@ -432,7 +475,7 @@ public class HikeDetail extends AppCompatActivity {
         btnParkingAvailable = findViewById(R.id.btnParkingAvailable);
         btnParkingUnavailable = findViewById(R.id.btnParkingUnavailable);
         btnSelectImage = findViewById(R.id.btnSelectImage);
-        btnViewHikeList = findViewById(R.id.btnViewHikeList);
+        btnOpenMap = findViewById(R.id.btnOpenMap);
         btnViewObservation = findViewById(R.id.btnViewObservation);
         btnCreateObservation = findViewById(R.id.btnCreateObservation);
         recyclerViewObservation = findViewById(R.id.recyclerViewObservation);
@@ -449,12 +492,11 @@ public class HikeDetail extends AppCompatActivity {
         db = HikeDatabase.getInstance(HikeDetail.this);
     }
 
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(HikeDetail.this, MainActivity.class);
+        intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
+        startActivity(intent);
     }
-
 }

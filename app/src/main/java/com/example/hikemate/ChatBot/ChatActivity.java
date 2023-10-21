@@ -70,6 +70,7 @@ public class ChatActivity extends AppCompatActivity implements NetworkUtils.OnCo
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_chat);
+        getSupportActionBar().hide();
         initView();
         // Create an instance of NetworkConnectivityMonitor and register the listener
         networkUtils = new NetworkUtils(ChatActivity.this);
@@ -152,7 +153,7 @@ public class ChatActivity extends AppCompatActivity implements NetworkUtils.OnCo
             llm.setStackFromEnd(true);
             recyclerView.setLayoutManager(llm);
             if (messageList.isEmpty()) {
-                addToChat("I will be your supporter! Ask me something that you need to know !", Message.SENT_BY_BOT);
+                addToChat(getString(R.string.i_will_be_your_supporter_ask_me_something_that_you_need_to_know), Message.SENT_BY_BOT);
             }
         }
         else {
@@ -205,7 +206,7 @@ public class ChatActivity extends AppCompatActivity implements NetworkUtils.OnCo
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                addResponse("Failed to load response due to "+e.getMessage());
+                addResponse(getString(R.string.failed_to_load_response_due_to)+e.getMessage());
             }
 
             @Override
@@ -223,7 +224,7 @@ public class ChatActivity extends AppCompatActivity implements NetworkUtils.OnCo
                         e.printStackTrace();
                     }
                 }else{
-                    addResponse("Failed to load response due to " + response.body().toString());
+                    addResponse(getString(R.string.failed_to_load_response_due_to) + response.body().toString());
                     Log.e("API_RESPONSE_ERROR", response.body().string());
                 }
             }

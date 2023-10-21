@@ -147,4 +147,8 @@
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">#85C888</item>
     </style>
+
+    <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/button_tint</item>
+    </style>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Weather forecast"
+        android:text="@string/weather_forecast"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Connect to the internet to use the weather forecast!"
+                android:text="@string/connect_to_the_internet_to_use_the_weather_forecast"
                 android:textStyle="italic"
                 android:textSize="16sp"
                 android:layout_gravity="center"/>
@@ -68,7 +68,7 @@
                     android:id="@+id/txtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Empty"
+                    android:text="@string/empty"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:drawablePadding="5dp"
-                    android:text="Wind:"
+                    android:text="@string/wind_nodot"
                     android:textSize="16sp"
                     app:drawableStartCompat="@drawable/wind"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:drawablePadding="5dp"
-                    android:text="Humidity:"
+                    android:text="@string/humidity_nodot"
                     android:textSize="16sp"
                     app:drawableStartCompat="@drawable/humidity"
                     app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Empty"
+                    android:text="@string/empty"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Today is not suitable to"
+                android:text="@string/today_is_not_suitable_to"
                 android:textSize="16sp"/>
 
             <TextView
@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Empty"
+                android:text="@string/empty"
                 android:textAllCaps="true"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -189,7 +189,7 @@
                 android:id="@+id/updateWeather"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:text="Tap to receive the weather at your location!"
+                android:text="@string/tap_to_receive_the_weather_at_your_location"
                 android:textSize="16sp"
                 android:gravity="center"
                 android:layout_marginTop="10dp"

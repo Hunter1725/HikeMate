@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F7FD"
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbarConfirmHike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:fitsSystemWindows="true"
+                style="@style/ToolbarTitleStyle"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:title="Confirm Hike"
+                app:titleTextColor="@color/green6"
+                app:navigationIcon="@drawable/ic_back"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressCalculate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/green3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="@color/primary"
+                    android:background="@color/white"
+                    app:trackCornerRadius="5dp" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:padding="5dp"
+                    android:id="@+id/imageHike"
+                    android:layout_width="350dp"
+                    android:layout_height="200dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/RoundedImageViewShape3"
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    app:strokeColor="@color/green4"
+                    app:strokeWidth="3dp" />
+
+                <TextView
+                    android:id="@+id/hikeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_of_hike"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageHike"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_name" />
+
+
+                <TextView
+                    android:id="@+id/txtHikeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_of_hike"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hikeName"/>
+
+                <TextView
+                    android:id="@+id/hikeLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/length_km"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtHikeName"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_length" />
+
+                <TextView
+                    android:id="@+id/txtHikeLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10.0"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hikeLength"/>
+
+
+                <TextView
+                    android:id="@+id/textHikeDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_hike"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtHikeLength"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_calendar"/>
+
+                <TextView
+                    android:id="@+id/txtHikeDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10/20/2023"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textHikeDate"/>
+
+                <TextView
+                    android:id="@+id/textLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtHikeDate"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_location" />
+
+
+                <TextView
+                    android:id="@+id/txtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vietnam"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textLocation"/>
+
+                <TextView
+                    android:id="@+id/textDifficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/level_of_difficulty"
+                    android:textSize="20sp"
+                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLocation"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_difficulty"/>
+
+                <TextView
+                    android:id="@+id/txtDifficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Easy"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textDifficulty"/>
+
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDifficulty"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_description"/>
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello world"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textDescription"/>
+
+
+                <TextView
+                    android:id="@+id/textParkingAvailable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/parking_available"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDescription"
+                    android:drawablePadding="5dp"
+                    app:drawableTint="@color/green4"
+                    app:drawableStartCompat="@drawable/ic_available"/>
+
+                <TextView
+                    android:id="@+id/txtParkingAvailable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:textSize="20sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textParkingAvailable"/>
+
+
+                <Button
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/btnCancel"
+                    style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    app:icon="@drawable/ic_cancel"
+                    app:iconTint="@color/green6"
+                    android:textColor="@color/green6"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtParkingAvailable"/>
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                    android:backgroundTint="@color/green6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm"
+                    app:icon="@drawable/ic_confirm"
+                    app:iconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnCancel"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</RelativeLayout>

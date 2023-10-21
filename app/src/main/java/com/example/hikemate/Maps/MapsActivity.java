@@ -1,5 +1,7 @@
 package com.example.hikemate.Maps;
 
+import static com.example.hikemate.Hike.HikeActivity.HIKE_IMAGE;
+import static com.example.hikemate.Hike.HikeDetail.HIKE_KEY;
 import static com.example.hikemate.WeatherForecast.WeatherActivity.REQUEST_CHECK_SETTINGS;
 
 import android.Manifest;
@@ -31,7 +33,10 @@ import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentContainerView;
 
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.Database.Model.Hike;
+import com.example.hikemate.Database.Model.HikeImage;
 import com.example.hikemate.Hike.HikeActivity;
+import com.example.hikemate.Hike.HikeDetail;
 import com.example.hikemate.NetworkUtils;
 import com.example.hikemate.R;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
@@ -188,8 +193,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         intent2 = new Intent(MapsActivity.this, WeatherActivity.class);
                     } else if (activity.equals("second")) {
                         intent2 = new Intent(MapsActivity.this, HikeActivity.class);
+                        intent2.putExtra(HIKE_KEY, (Hike) intent.getParcelableExtra(HIKE_KEY));
+                        intent2.putExtra(HIKE_IMAGE, (HikeImage) intent.getParcelableExtra(HIKE_IMAGE));
+                    } else if (activity.equals("third")) {
+                        intent2 = new Intent(MapsActivity.this, HikeDetail.class);
+                        intent2.putExtra(HIKE_KEY, (Hike) intent.getParcelableExtra(HIKE_KEY));
                     }
-
                     intent2.putExtra(LATLNG_KEY, latLngPass);
                     startActivity(intent2);
                     return true;
@@ -226,7 +235,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mMap.addMarker(new MarkerOptions().position(latLng).title(location));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
                     Toast.makeText(getApplicationContext(), address.getLatitude() + " " + address.getLongitude(), Toast.LENGTH_LONG).show();
-
                 }
                 return false;
             }
