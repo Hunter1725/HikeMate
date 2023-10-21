@@ -27,7 +27,7 @@
             app:strokeWidth="3dp"
             app:strokeColor="@color/green4"
             app:shapeAppearanceOverlay="@style/RoundedImageViewShape"
-            android:padding="5dp"
+            android:padding="3dp"
             app:srcCompat="@drawable/ic_launcher_background"
             android:contentDescription="Image of Hike" />
 
@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hike Name"
+
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"

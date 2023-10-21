@@ -6,13 +6,19 @@ import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +26,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
@@ -50,10 +57,12 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +71,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class HikeDetail extends AppCompatActivity {
-
     public static final String HIKE_KEY = "hike_key";
     public static final String HIKE_ID = "HikeId";
     private HikeDatabase db;
@@ -88,7 +96,9 @@ public class HikeDetail extends AppCompatActivity {
     private MaterialToolbar toolbarHike;
     private LatLng incomingLatlng;
     private RecyclerView recyclerViewObservation;
-
+    private AlertDialog dialog;
+    private static final int CAMERA_PERMISSION_CODE = 101;
+    private ArrayList<Observation> observationList;
 
 
     @Override
@@ -104,6 +114,14 @@ public class HikeDetail extends AppCompatActivity {
         initListener();
         initImagePickerNew();
 
+    }
+
+    private boolean checkCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
     }
 
 
@@ -149,7 +167,9 @@ public class HikeDetail extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        assignData();
+        if(!observationList.isEmpty()) {
+            assignData();
+        }
     }
 
 
@@ -287,9 +307,10 @@ public class HikeDetail extends AppCompatActivity {
         imageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pickMedia.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
+//                pickMedia.launch(new PickVisualMediaRequest.Builder()
+//                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+//                        .build());
+                showDialogImage();
             }
         });
         radioDifficulty.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -325,6 +346,76 @@ public class HikeDetail extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    CropImageOptions cropImageOptions = new CropImageOptions();
+                    cropImageOptions.imageSourceIncludeGallery = true;
+                    cropImageOptions.imageSourceIncludeCamera = false;
+                    cropImageOptions.activityMenuIconColor = R.color.black;
+                    CropImageContractOptions cropImageContractOptions = new CropImageContractOptions(getImageUriFromBitmap((Bitmap) bundle.get("data")), cropImageOptions);
+                    cropImage.launch(cropImageContractOptions);
+                }
+            }
+    );
+
+    private Uri getImageUriFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
+    private void showDialogImage() {
+        // Inflate the dialog layout
+        View dialogView = getLayoutInflater().inflate(R.layout.image_option, null);
+
+        // Access the TextView in the dialog layout
+        Button btnSelectImage = dialogView.findViewById(R.id.btnSelectImage);
+        Button btnCaptureImage = dialogView.findViewById(R.id.btnCaptureImage);
+
+        if (checkCameraPermission()) {
+            btnCaptureImage.setEnabled(true);
+        } else {
+            requestCameraPermission();
+        }
+        btnSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
+
+        btnCaptureImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(intent);
+            }
+        });
+
+        // Create a MaterialAlertDialogBuilder
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(HikeDetail.this, R.style.ThemeOverlay_App_MaterialAlertDialog2);
+        builder.setView(dialogView)
+                .setTitle("Update Image")
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        // Show the dialog
+        dialog = builder.create();
+        dialog.show();
     }
 
     private void save(){
@@ -405,7 +496,7 @@ public class HikeDetail extends AppCompatActivity {
                 bitmapImageHike = hikeImage.getData();
                 date = incomingHike.getDate();
                 //init RecycleViewObservation
-                ArrayList<Observation> observationList = (ArrayList<Observation>) db.observationDao().getObservationsForHike(incomingHike.getId());
+                observationList = (ArrayList<Observation>) db.observationDao().getObservationsForHike(incomingHike.getId());
                 ObservationItem observationItem = new ObservationItem(observationList, HikeDetail.this);
                 recyclerViewObservation.setAdapter(observationItem);
                 recyclerViewObservation.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));

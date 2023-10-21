@@ -97,4 +97,6 @@
     <string name="observation_time">Thời Gian Quan Sát</string>
     <string name="additional_comments">Ghi chú bổ sung</string>
     <string name="view_all">Xem tất cả</string>
+    <string name="capture">Chụp</string>
+    <string name="more_details">Chi tiết</string>
 </resources>

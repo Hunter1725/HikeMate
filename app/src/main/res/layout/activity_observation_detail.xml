@@ -126,6 +126,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/black"
                         android:textColorHint="@color/green4"
                         android:textStyle="bold" />
@@ -165,6 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="date"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/black"
                         android:textColorHint="@color/green4"
                         android:textStyle="bold" />

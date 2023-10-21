@@ -21,7 +21,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="image">Image</string>
-    <string name="select_image">Select Image</string>
+    <string name="select_image">Select</string>
     <string name="please_select_an_image">Please select an image!</string>
     <string name="clear_all">Clear all</string>
     <string name="view_hike_list">View Hike List</string>
@@ -97,5 +97,7 @@
     <string name="observation_time">Observation Time</string>
     <string name="additional_comments">Additional Comments</string>
     <string name="view_all">View All</string>
+    <string name="capture">Capture</string>
+    <string name="more_details">More Details</string>
 
 </resources>

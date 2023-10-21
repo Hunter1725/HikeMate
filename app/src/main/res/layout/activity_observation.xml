@@ -49,6 +49,7 @@
                     android:id="@+id/progressCalculate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:indeterminate="true"
                     android:visibility="gone"
                     app:indicatorColor="@color/green3"
@@ -57,7 +58,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:trackColor="@color/primary"
-                    android:background="@color/white"
                     app:trackCornerRadius="5dp" />
 
                 <TextView
@@ -98,7 +98,7 @@
                         android:inputType="text"
                         android:textColor="@color/black"
                         android:textColorHint="@color/green4"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -150,7 +150,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutObservationTime"/>
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayoutObservationTime" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAdditionalComments"
@@ -218,6 +218,21 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageObservation" />
 
+                <Button
+                    android:id="@+id/btnCaptureImage"
+                    style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Capture"
+                    android:textColor="@color/green6"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_camera"
+                    app:iconTint="@color/green4"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnSelectImage"
+                    app:layout_constraintStart_toEndOf="@+id/btnSelectImage" />
+
                 <TextView
                     android:id="@+id/txtWarning"
                     android:layout_width="wrap_content"
@@ -243,34 +258,34 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <Button
-                    android:layout_marginTop="15dp"
                     android:id="@+id/btnViewObservationList"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:text="View Observation List"
-                    app:icon="@drawable/ic_list"
-                    app:iconTint="@color/green6"
                     android:textColor="@color/green6"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    app:icon="@drawable/ic_list"
+                    app:iconTint="@color/green6"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnSelectImage"/>
+                    app:layout_constraintTop_toBottomOf="@+id/btnSelectImage" />
 
                 <Button
                     android:id="@+id/btnCreate"
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                    android:backgroundTint="@color/green6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green6"
                     android:text="@string/create"
-                    app:icon="@drawable/ic_create"
-                    app:iconTint="@color/white"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    app:icon="@drawable/ic_create"
+                    app:iconTint="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/btnViewObservationList"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

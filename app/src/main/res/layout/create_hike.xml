@@ -387,13 +387,13 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textImage"
-                    app:shapeAppearanceOverlay="@style/RoundedImageViewShape2" />
+                    app:shapeAppearanceOverlay="@style/RoundedImageViewShape" />
 
                 <Button
                     android:id="@+id/btnSelectImage"
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
+                    android:layout_height="50dp"
                     android:text="@string/select_image"
                     android:textColor="@color/green6"
                     android:textSize="16sp"
@@ -402,6 +402,22 @@
                     app:iconTint="@color/green4"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imgHike" />
+
+                <Button
+                    android:id="@+id/btnCaptureImage"
+                    style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                    android:layout_width="115dp"
+                    android:layout_height="50dp"
+                    android:text="@string/capture"
+                    android:textColor="@color/green6"
+                    android:textStyle="bold"
+                    app:icon="@drawable/baseline_camera_alt_24"
+                    app:iconTint="@color/green4"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="28dp"
+                    app:layout_constraintStart_toEndOf="@+id/btnSelectImage"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnSelectImage" />
+
 
                 <TextView
                     android:id="@+id/txtWarning"
@@ -426,6 +442,7 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/btnSelectImage"
                     app:layout_constraintEnd_toEndOf="parent" />
+
 
                 <Button
                     android:id="@+id/btnCreate"

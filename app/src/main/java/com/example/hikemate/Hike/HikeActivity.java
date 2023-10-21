@@ -18,11 +18,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -76,6 +79,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import com.canhub.cropper.CropImageContractOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,8 +96,7 @@ public class HikeActivity extends AppCompatActivity {
     private ShapeableImageView imgHike;
     private Button btnSelectImage, btnClear, btnCreate;
     private FusedLocationProviderClient fusedLocationClient;
-    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
-    private ActivityResultLauncher<CropImageContractOptions> cropImage;
+
     private Bitmap bitmapImageHike;
     private Long date;
     private TextView txtWarning, btnOpenMap;
@@ -105,6 +108,12 @@ public class HikeActivity extends AppCompatActivity {
     private LatLng incomingLatlng;
     private Hike incomingHike;
     private HikeImage hikeImage;
+
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    private ActivityResultLauncher<CropImageContractOptions> cropImage;
+
+    private static final int CAMERA_PERMISSION_CODE = 101;
+    private Button takeImage;
 
 
     @Override
@@ -119,6 +128,11 @@ public class HikeActivity extends AppCompatActivity {
         assignData();
 
         initListener();
+        if (checkCameraPermission()) {
+            takeImage.setEnabled(true);
+        } else {
+            requestCameraPermission();
+        }
 
         initializeDatePicker();
 
@@ -179,6 +193,16 @@ public class HikeActivity extends AppCompatActivity {
             }
         }
     }
+
+    private boolean checkCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+    }
+
+
 
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -428,6 +452,15 @@ public class HikeActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+
+        takeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(intent);
+            }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -557,6 +590,28 @@ public class HikeActivity extends AppCompatActivity {
 
     }
 
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    CropImageOptions cropImageOptions = new CropImageOptions();
+                    cropImageOptions.imageSourceIncludeGallery = true;
+                    cropImageOptions.imageSourceIncludeCamera = false;
+                    cropImageOptions.activityMenuIconColor = R.color.black;
+                    CropImageContractOptions cropImageContractOptions = new CropImageContractOptions(getImageUriFromBitmap((Bitmap) bundle.get("data")), cropImageOptions);
+                    cropImage.launch(cropImageContractOptions);
+                }
+            }
+    );
+
+    private Uri getImageUriFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
     private void confirm(){
         if (edtHikeName.getText().toString().isEmpty()) {
             textInputLayoutHikeName.setError("Please enter the Hike name!");
@@ -626,7 +681,7 @@ public class HikeActivity extends AppCompatActivity {
         btnOpenMap = findViewById(R.id.btnOpenMap);
         txtWarning = findViewById(R.id.txtWarning);
         toolbarCreateHike = findViewById(R.id.toolbarCreateHike);
-
+        takeImage = findViewById(R.id.btnCaptureImage);
         db = HikeDatabase.getInstance(HikeActivity.this);
     }
 

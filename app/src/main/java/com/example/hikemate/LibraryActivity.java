@@ -58,7 +58,6 @@ public class LibraryActivity extends Fragment {
             }
         });
 
-
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,12 +3,15 @@ package com.example.hikemate.Observation;
 import static com.example.hikemate.Hike.HikeDetail.HIKE_ID;
 import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 
 import com.canhub.cropper.CropImageContract;
@@ -44,6 +49,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import com.canhub.cropper.CropImageContractOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -56,14 +62,15 @@ public class ObservationActivity extends AppCompatActivity {
     private Button btnSelectImage, btnClear, btnViewObservationList, btnCreate;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
+    private static final int CAMERA_PERMISSION_CODE = 101;
+    private Button takeImage;
     private Bitmap bitmapImageHike;
     private Long date;
-    private TextView txtWarning, btnOpenMap;
+    private TextView txtWarning;
     private MaterialDatePicker<Long> datePicker;
     private MaterialToolbar toolbarCreateObservation;
     private CircularProgressIndicator progressCalculate;
     private Hike incomingHike;
-
     private ObservationDao observationDao;
     private ObservationImageDao observationImageDao;
 
@@ -77,6 +84,7 @@ public class ObservationActivity extends AppCompatActivity {
         initView();
 
         initListener();
+
 
         initializeDatePicker();
 
@@ -97,6 +105,20 @@ public class ObservationActivity extends AppCompatActivity {
         String todayDate = dateFormat.format(new Date(todayInMillis));
         edtObservationTime.setText(todayDate);
         date = todayInMillis;
+
+        if (checkCameraPermission()) {
+            takeImage.setEnabled(true);
+        } else {
+            requestCameraPermission();
+        }
+    }
+
+    private boolean checkCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
     }
 
     private void initImagePickerNew() {
@@ -198,6 +220,14 @@ public class ObservationActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+
+        takeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                activityResultLauncher.launch(intent);
+            }
+        });
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,6 +281,28 @@ public class ObservationActivity extends AppCompatActivity {
         });
     }
 
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    CropImageOptions cropImageOptions = new CropImageOptions();
+                    cropImageOptions.imageSourceIncludeGallery = true;
+                    cropImageOptions.imageSourceIncludeCamera = false;
+                    cropImageOptions.activityMenuIconColor = R.color.black;
+                    CropImageContractOptions cropImageContractOptions = new CropImageContractOptions(getImageUriFromBitmap((Bitmap) bundle.get("data")), cropImageOptions);
+                    cropImage.launch(cropImageContractOptions);
+                }
+            }
+    );
+
+    private Uri getImageUriFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
     private void save() {
         String observationName = edtObservation.getText().toString();
         String comments = edtComment.getText().toString();
@@ -291,10 +343,9 @@ public class ObservationActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         btnViewObservationList = findViewById(R.id.btnViewObservationList);
         btnCreate = findViewById(R.id.btnCreate);
-        btnOpenMap = findViewById(R.id.btnOpenMap);
         txtWarning = findViewById(R.id.txtWarning);
         toolbarCreateObservation = findViewById(R.id.toolbarCreateObservation);
-
+        takeImage = findViewById(R.id.btnCaptureImage);
         db = HikeDatabase.getInstance(ObservationActivity.this);
     }
 
