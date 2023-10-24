@@ -43,7 +43,7 @@
     <string name="action_geolocate">Chọn địa điểm</string>
     <string name="default_info_title">Vị trí mặc định</string>
     <string name="default_info_snippet">Không tìm thấy địa điểm nào, vì quyền truy cập vị trí đã bị tắt.</string>
-    <string name="animals_and_plants">Động vật và thực vật</string>
+    <string name="animals_and_plants">Tài liệu về kiến thức sinh tồn</string>
     <string name="animal_classification">Lớp động vật</string>
     <string name="plant_classification">Lớp thực vật</string>
     <string name="survival_skills">Các kĩ năng sinh tồn</string>

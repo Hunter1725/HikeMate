@@ -1,9 +1,12 @@
 package com.example.hikemate;
 
+import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,9 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
@@ -32,12 +38,15 @@ import com.example.hikemate.Setting.SettingActivity;
 import com.example.hikemate.Setting.WebsiteActivity;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.example.hikemate.Hike.HikeActivity;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.Priority;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private HikeDatabase db;
     private NestedScrollView nestedScrollView;
     private FloatingActionButton fabScrollToTop;
-
+    public static final int CAMERA_PERMISSION_CODE = 101;
     private Button testButton, anotherTestButton, skillTestButton;
 
     @Override
@@ -81,7 +90,55 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         initListener();
+        requestCameraUpdatesWithPermission();
     }
+
+    private void requestCameraUpdatesWithPermission() {
+        // Check for location permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Getting camera permission!", Toast.LENGTH_LONG).show();
+        } else {
+            // Request permissions
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                // User has previously denied the permission, show a rationale and request again if needed
+                showSnackbar();
+            } else {
+                // Request the permissions directly
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.CAMERA
+                }, CAMERA_PERMISSION_CODE);
+            }
+        }
+    }
+
+    private void showSnackbar() {
+        Snackbar.make(findViewById(android.R.id.content), "Camera permission is required for this app to work.", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Grant", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Request the permissions when the "Grant" button is clicked in the Snackbar
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                                Manifest.permission.CAMERA
+                        }, CAMERA_PERMISSION_CODE);
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            // Check if the permissions were granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions are granted, proceed with requesting location updates
+                Toast.makeText(this, "Location permissions are granted for this app to work.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Location permissions are not granted for this app to work.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     private void initListener() {
 

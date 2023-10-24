@@ -42,6 +42,7 @@ public class ConfirmActivity extends AppCompatActivity {
     private HikeDatabase db;
     private MaterialToolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

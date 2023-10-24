@@ -1,6 +1,7 @@
 package com.example.hikemate.Hike;
 
 import static com.example.hikemate.Hike.HikeDetail.HIKE_KEY;
+import static com.example.hikemate.MainActivity.CAMERA_PERMISSION_CODE;
 import static com.example.hikemate.MainActivity.SHOW_FRAGMENT;
 import static com.example.hikemate.Maps.MapsActivity.LATLNG_KEY;
 import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
@@ -112,7 +113,6 @@ public class HikeActivity extends AppCompatActivity {
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
 
-    private static final int CAMERA_PERMISSION_CODE = 101;
     private Button takeImage;
 
 
@@ -128,11 +128,12 @@ public class HikeActivity extends AppCompatActivity {
         assignData();
 
         initListener();
-        if (checkCameraPermission()) {
-            takeImage.setEnabled(true);
-        } else {
-            requestCameraPermission();
-        }
+//        if (checkCameraPermission()) {
+//            takeImage.setEnabled(true);
+//        }
+//        else {
+//            requestCameraPermission();
+//        }
 
         initializeDatePicker();
 
@@ -193,15 +194,6 @@ public class HikeActivity extends AppCompatActivity {
             }
         }
     }
-
-    private boolean checkCameraPermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-    }
-
 
 
     private LocationCallback locationCallback = new LocationCallback() {
@@ -351,6 +343,14 @@ public class HikeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Location permissions are required for this app to work.", Toast.LENGTH_LONG).show();
             }
         }
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions are granted, proceed with requesting location updates
+                Toast.makeText(this, "Location permissions are granted for this app to work.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Location permissions are not granted for this app to work.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void initImagePickerNew() {
@@ -450,14 +450,32 @@ public class HikeActivity extends AppCompatActivity {
             edtDoH.setText(selectedDate);
         });
     }
+    private void showSnackbarCam() {
+        Snackbar.make(findViewById(android.R.id.content), "Camera permission is required for this app to work.", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Grant", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Request the permissions when the "Grant" button is clicked in the Snackbar
+                        ActivityCompat.requestPermissions(HikeActivity.this, new String[]{
+                                Manifest.permission.CAMERA
+                        }, CAMERA_PERMISSION_CODE);
+                    }
+                })
+                .show();
+    }
 
     private void initListener() {
 
         takeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                activityResultLauncher.launch(intent);
+                if (ActivityCompat.checkSelfPermission(HikeActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    activityResultLauncher.launch(intent);
+                } else {
+                    Toast.makeText(HikeActivity.this, "Require camera permission!", Toast.LENGTH_LONG).show();
+                    showSnackbarCam();
+                }
             }
         });
 
