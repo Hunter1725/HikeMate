@@ -22,6 +22,29 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/categoryDropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        app:hintEnabled="true"
+        app:hintTextColor="@color/green4"
+        android:hint="@string/sorting_list"
+        app:boxStrokeColor="@color/green6">
+
+        <AutoCompleteTextView
+            android:id="@+id/categoryAutoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:textStyle="bold"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/detailsRecView"
         android:layout_width="match_parent"
@@ -36,8 +59,6 @@
         android:id="@+id/txtEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtDetail"
-        android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:text="@string/no_hikes_have_been_added_yet"
         android:textSize="18sp"
@@ -49,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:src="@drawable/img_empty"
-        android:layout_below="@+id/txtEmpty"
         android:visibility="gone"/>
 
     <Button

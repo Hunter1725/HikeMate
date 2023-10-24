@@ -25,6 +25,18 @@ public interface HikeDao {
     @Query("SELECT * FROM hike")
     List<Hike> getAllHikes();
 
+    @Query("SELECT * FROM hike ORDER BY id DESC LIMIT 2")
+    List<Hike> getRecentHikes();
+
+    @Query("SELECT * FROM hike ORDER BY date DESC")
+    List<Hike> sortHikesByDate();
+
+    @Query("SELECT * FROM hike ORDER BY location DESC")
+    List<Hike> sortHikesByLocation();
+
+    @Query("SELECT * FROM hike ORDER BY length DESC")
+    List<Hike> sortHikesByLength();
+
     @Delete
     void deleteHike(Hike hike);
 

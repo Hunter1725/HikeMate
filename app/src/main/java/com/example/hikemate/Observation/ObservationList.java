@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.Database.Model.ObservationImage;
 import com.example.hikemate.R;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 
 public class ObservationList extends AppCompatActivity {
 
+    private MaterialToolbar toolbarListObservation;
     private RecyclerView detailsRecView;
     private TextView txtEmpty;
     private ShapeableImageView imageEmpty;
@@ -54,12 +57,20 @@ public class ObservationList extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_observation_list);
         getSupportActionBar().hide();
         initView();
         Intent intent = getIntent();
         incomingHike = intent.getParcelableExtra(HIKE_ID);
         initRecyclerview();
+
+        toolbarListObservation.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -174,6 +185,7 @@ public class ObservationList extends AppCompatActivity {
         detailsRecView = findViewById(R.id.detailsRecView);
         txtEmpty = findViewById(R.id.txtEmpty);
         imageEmpty = findViewById(R.id.imageEmpty);
+        toolbarListObservation = findViewById(R.id.toolbarListObservation);
         db = HikeDatabase.getInstance(ObservationList.this);
         detailsRecView = findViewById(R.id.detailsRecView);
 

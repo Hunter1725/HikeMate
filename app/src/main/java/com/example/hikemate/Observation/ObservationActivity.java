@@ -221,6 +221,13 @@ public class ObservationActivity extends AppCompatActivity {
 
     private void initListener() {
 
+        toolbarCreateObservation.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         takeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

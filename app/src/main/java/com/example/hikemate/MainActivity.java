@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private void requestCameraUpdatesWithPermission() {
         // Check for location permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Getting camera permission!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Granted camera permission!", Toast.LENGTH_SHORT).show();
         } else {
             // Request permissions
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
@@ -132,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
             // Check if the permissions were granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permissions are granted, proceed with requesting location updates
-                Toast.makeText(this, "Location permissions are granted for this app to work.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Camera permissions are granted for this app to work.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Location permissions are not granted for this app to work.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Camera permissions are not granted for this app to work.", Toast.LENGTH_LONG).show();
             }
         }
     }

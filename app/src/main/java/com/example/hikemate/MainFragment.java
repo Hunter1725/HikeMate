@@ -12,18 +12,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.Weather;
+import com.example.hikemate.Hike.HikeActivity;
+import com.example.hikemate.Hike.HikeAdapter;
 import com.example.hikemate.WeatherForecast.CalendarUtils;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainFragment extends Fragment implements NetworkUtils.OnConnectivityChangeListener{
-    private MaterialCardView weatherCard;
+    private MaterialCardView weatherCard, newHikeCard, chatbotCard;
     private NetworkUtils networkUtils;
     private TextView txtEmpty, txtDate, txtTemp, txtWind, txtHumidity, txtWeatherRecommend, txtWeatherDes, updateWeather;
-
+    private RecyclerView hikesListView;
     private LinearLayout weatherLayout, lostLayout;
     private HikeDatabase db;
     private ImageView imageWeather;
@@ -39,9 +49,28 @@ public class MainFragment extends Fragment implements NetworkUtils.OnConnectivit
         networkUtils.register();
         initListener();
 
+        initHikeList();
+
+
         initWeatherForecast();
 
         return view;
+    }
+
+    private void initHikeList() {
+        List<Hike> hikes =  db.hikeDao().getRecentHikes();
+        if(hikes.size() > 0) {
+            hikesListView.setVisibility(View.VISIBLE);
+            txtEmpty.setVisibility(View.GONE);
+            HikeAdapter planListAdapter = new HikeAdapter((ArrayList<Hike>) hikes, getActivity());
+            hikesListView.setAdapter(planListAdapter);
+            hikesListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
+        } else {
+            hikesListView.setVisibility(View.GONE);
+            txtEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initListener() {
@@ -49,6 +78,20 @@ public class MainFragment extends Fragment implements NetworkUtils.OnConnectivit
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), WeatherActivity.class));
+            }
+        });
+
+        newHikeCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), HikeActivity.class));
+            }
+        });
+
+        chatbotCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ChatActivity.class));
             }
         });
     }
@@ -151,6 +194,9 @@ public class MainFragment extends Fragment implements NetworkUtils.OnConnectivit
         updateWeather = view.findViewById(R.id.updateWeather);
         weatherCard = view.findViewById(R.id.weatherCard);
         imageWeather = view.findViewById(R.id.imageWeather);
+        newHikeCard = view.findViewById(R.id.newHikeCard);
+        chatbotCard = view.findViewById(R.id.chatbotCard);
+        hikesListView = view.findViewById(R.id.hikesListView);
         db = HikeDatabase.getInstance(getActivity());
     }
 

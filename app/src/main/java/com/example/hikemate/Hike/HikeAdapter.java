@@ -28,6 +28,11 @@ public class HikeAdapter extends  RecyclerView.Adapter<HikeAdapter.ViewHolder>{
     private Context context;
     private HikeDatabase db;
 
+    public void setHikeArrayList(ArrayList<Hike> hikeArrayList) {
+        this.hikeArrayList = hikeArrayList;
+        notifyDataSetChanged();
+    }
+
     public HikeAdapter(ArrayList<Hike> hikeArrayList, Context context) {
         this.hikeArrayList = hikeArrayList;
         this.context = context;

@@ -21,6 +21,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,10 +32,12 @@ import com.bumptech.glide.MemoryCategory;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.HikeImage;
+import com.example.hikemate.GetCurrentLanguage;
 import com.example.hikemate.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import android.view.LayoutInflater;
@@ -47,13 +52,51 @@ public class HikeList extends Fragment {
     private Button btncreateHike;
     private Hike deletedHike;
     private HikeImage deletedHikeImage;
+    private TextInputLayout categoryDropdown;
+    private AutoCompleteTextView categoryAutoCompleteTextView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.hike_list, container, false);
         initView(view);
+        initRecyclerview();
+        initSort();
         return view;
+    }
+
+    private void initSort() {
+        ArrayList<String> customArray = new ArrayList<>();
+        customArray.add(getString(R.string.all));
+        customArray.add(getString(R.string.date));
+        customArray.add(getString(R.string.location_nodot));
+        customArray.add(getString(R.string.length));
+        // Create the ArrayAdapter using the custom array
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                R.layout.dropdown_menu, customArray);
+        // Set the adapter to the AutoCompleteTextView
+        categoryAutoCompleteTextView.setAdapter(adapter);
+        categoryAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected category
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                // Handle the selected category
+                if (selectedCategory.equals(getString(R.string.all))) {
+                    hikeArrayList = (ArrayList<Hike>) db.hikeDao().getAllHikes();
+                    hikeAdapter.setHikeArrayList(hikeArrayList);
+                } else if (selectedCategory.equals(getString(R.string.date))){
+                    hikeArrayList = (ArrayList<Hike>) db.hikeDao().sortHikesByDate();
+                    hikeAdapter.setHikeArrayList(hikeArrayList);
+                } else if (selectedCategory.equals(getString(R.string.location_nodot))) {
+                    hikeArrayList = (ArrayList<Hike>) db.hikeDao().sortHikesByLocation();
+                    hikeAdapter.setHikeArrayList(hikeArrayList);
+                } else {
+                    hikeArrayList = (ArrayList<Hike>) db.hikeDao().sortHikesByLength();
+                    hikeAdapter.setHikeArrayList(hikeArrayList);
+                }
+            }
+        });
     }
 
     @Override
@@ -148,10 +191,12 @@ public class HikeList extends Fragment {
             txtEmpty.setVisibility(View.VISIBLE);
             imageEmpty.setVisibility(View.VISIBLE);
             detailsRecView.setVisibility(View.GONE);
+            categoryDropdown.setVisibility(View.GONE);
         }else{
             txtEmpty.setVisibility(View.GONE);
             imageEmpty.setVisibility(View.GONE);
             detailsRecView.setVisibility(View.VISIBLE);
+            categoryDropdown.setVisibility(View.VISIBLE);
 
             detailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
             hikeAdapter = new HikeAdapter(hikeArrayList, getActivity());
@@ -169,6 +214,8 @@ public class HikeList extends Fragment {
         detailsRecView = view.findViewById(R.id.detailsRecView);
         txtEmpty = view.findViewById(R.id.txtEmpty);
         imageEmpty = view.findViewById(R.id.imageEmpty);
+        categoryDropdown = view.findViewById(R.id.categoryDropdown);
+        categoryAutoCompleteTextView = view.findViewById(R.id.categoryAutoCompleteTextView);
         db = HikeDatabase.getInstance(getActivity());
         detailsRecView = view.findViewById(R.id.detailsRecView);
 

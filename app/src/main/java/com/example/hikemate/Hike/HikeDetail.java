@@ -167,7 +167,7 @@ public class HikeDetail extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!observationList.isEmpty()) {
+        if(!db.observationDao().getObservationsForHike(incomingHike.getId()).isEmpty()) {
             assignData();
         }
     }

@@ -102,4 +102,14 @@
     <string name="view_all">View All</string>
     <string name="capture">Capture</string>
     <string name="more_details">More Details</string>
+    <string name="welcome_to_hike_mate">Welcome to Hike Mate!</string>
+    <string name="new_hike">New Hike</string>
+    <string name="supporter">Supporter</string>
+    <string name="recent_hike_plan">Recent hike plan</string>
+    <string name="no_hike_plan_please_inserting_the_new_one">No hike plan! Please inserting the new one!</string>
+    <string name="sorting_list">Sorting by</string>
+    <string name="all">All</string>
+    <string name="date">Date</string>
+    <string name="location_nodot">Location</string>
+    <string name="length">Length</string>
 </resources>
