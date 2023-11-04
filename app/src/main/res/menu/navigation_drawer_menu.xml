@@ -6,17 +6,17 @@
 
         <item
             android:id="@+id/planning_items"
-            android:title="Hike">
+            android:title="@string/hike">
             <menu>
                 <item
                     android:id="@+id/allPlan"
-                    android:title="All hike"
+                    android:title="@string/all_hike"
                     android:icon="@drawable/plan"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/newPlan"
-                    android:title="New hike"
+                    android:title="@string/new_hike"
                     android:icon="@drawable/new_plan"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
@@ -25,12 +25,12 @@
 
         <item
             android:id="@+id/chat"
-            android:title="Chat supporter">
+            android:title="@string/chat_supporter">
             <menu>
                 <item
                     android:id="@+id/chatSupporter"
                     android:icon="@drawable/chat"
-                    android:title="Chat supporter"
+                    android:title="@string/chat_supporter"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
             </menu>
@@ -38,12 +38,12 @@
 
         <item
             android:id="@+id/weatherForecast"
-            android:title="Weather forecast">
+            android:title="@string/weather_forecast">
             <menu>
                 <item
                     android:id="@+id/weather"
                     android:icon="@drawable/ic_weather"
-                    android:title="Weather forecast"
+                    android:title="@string/weather_forecast"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
             </menu>
@@ -51,24 +51,24 @@
 
         <item
             android:id="@+id/others"
-            android:title="Other">
+            android:title="@string/other">
             <menu>
                 <item
                     android:id="@+id/setting"
                     android:icon="@drawable/ic_setting"
-                    android:title="Setting"
+                    android:title="@string/setting"
                     android:checkable="true"
                     app:showAsAction="ifRoom"/>
                 <item
                     android:id="@+id/term"
                     android:icon="@drawable/ic_license"
-                    android:title="Terms of condition"
+                    android:title="@string/terms_of_condition"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
                 <item
                     android:id="@+id/licence"
                     android:icon="@drawable/ic_privacy"
-                    android:title="Privacy policy"
+                    android:title="@string/privacy_policy"
                     android:checkable="true"
                     app:showAsAction="ifRoom" />
             </menu>

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/resetChat"
-        android:title="Reset the conversation"
+        android:title="@string/reset_the_conversation"
         android:iconTint="@color/black"
         app:showAsAction="never"
         />

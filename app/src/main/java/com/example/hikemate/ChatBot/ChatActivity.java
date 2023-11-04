@@ -181,7 +181,7 @@ public class ChatActivity extends AppCompatActivity implements NetworkUtils.OnCo
     private void callAPI(String question) {
         String finalMessage = GUIDE_STRING.concat(question);
         //okhttp
-        messageList.add(new Message("Typing... ",Message.SENT_BY_BOT, timeNow()));
+        messageList.add(new Message(getString(R.string.typing),Message.SENT_BY_BOT, timeNow()));
 
         JSONObject jsonBody = new JSONObject();
         try {

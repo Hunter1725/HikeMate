@@ -31,7 +31,7 @@
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="Observation details" />
+                app:title="@string/observation_details" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

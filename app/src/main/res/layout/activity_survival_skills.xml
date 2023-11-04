@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/primary"
-                android:hint="Clicking to search"
+                android:hint="@string/clicking_to_search"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:menu="@menu/search_bar"
                 app:navigationIcon="@drawable/baseline_reply_all_24" />
@@ -69,7 +69,7 @@
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Searching skill"
+            android:hint="@string/searching_skill"
             app:layout_anchor="@id/search_bar">
 
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="15dp"
-                android:text="Result: "
+                android:text="@string/result"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="No matching result"
+                    android:text="@string/no_matching_result"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"

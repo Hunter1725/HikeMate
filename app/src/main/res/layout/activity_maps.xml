@@ -29,7 +29,7 @@
                 app:menu="@menu/menu_map"
                 android:background="@color/primary"
                 app:navigationIcon="@drawable/back"
-                app:title="Map activity" />
+                app:title="@string/map" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

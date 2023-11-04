@@ -31,7 +31,7 @@
                 android:fitsSystemWindows="true"
                 app:navigationIcon="@drawable/back"
                 app:menu="@menu/top_bar_chatbot"
-                app:title="Supporter" />
+                app:title="@string/supporter" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Connect to internet to use the chat bot!"
+                android:text="@string/connect_to_internet_to_use_the_chat_bot"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,7 @@
             android:layout_centerInParent="true"
             android:layout_toStartOf="@id/btnSend"
             android:background="@drawable/rounded_corner"
-            android:hint="Write here"
+            android:hint="@string/write_here"
             android:padding="16dp" />
 
         <ImageButton

@@ -29,7 +29,7 @@
                 android:fitsSystemWindows="true"
                 style="@style/ToolbarTitleStyle"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:title="Create Hike"
+                app:title="@string/create_hike"
                 app:titleTextColor="@color/green6"
                 app:navigationIcon="@drawable/ic_back"/>
 
@@ -229,7 +229,7 @@
                     android:id="@+id/btnOpenMap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Open Map"
+                    android:text="@string/open_map"
                     android:textColor="@color/green6"
                     android:layout_marginEnd="10dp"
                     android:textSize="18sp"
@@ -392,7 +392,7 @@
                 <Button
                     android:id="@+id/btnSelectImage"
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                    android:layout_width="110dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="@string/select_image"
                     android:textColor="@color/green6"
@@ -406,7 +406,7 @@
                 <Button
                     android:id="@+id/btnCaptureImage"
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                    android:layout_width="115dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="@string/capture"
                     android:textColor="@color/green6"

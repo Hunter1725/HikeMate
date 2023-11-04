@@ -281,7 +281,7 @@ public class HikeActivity extends AppCompatActivity {
             } else {
                 // User canceled or didn't enable location settings. Handle this case appropriately.
                 progressCalculate.setVisibility(View.GONE);
-                Toast.makeText(HikeActivity.this, "Location settings are not enabled.", Toast.LENGTH_LONG).show();
+                Toast.makeText(HikeActivity.this, getApplicationContext().getString(R.string.location_settings_are_not_enabled), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -314,7 +314,7 @@ public class HikeActivity extends AppCompatActivity {
 
     private void showSnackbar() {
         // Show a Snackbar to explain the need for permissions and prompt the user to grant them
-        Snackbar.make(findViewById(android.R.id.content), "Location permission is required for this app to work.", Snackbar.LENGTH_INDEFINITE)
+        Snackbar.make(findViewById(android.R.id.content), HikeActivity.this.getString(R.string.location_permission_is_required_for_this_app_to_work), Snackbar.LENGTH_INDEFINITE)
                 .setAction("Grant", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

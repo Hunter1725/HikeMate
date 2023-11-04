@@ -30,7 +30,7 @@
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:navigationIcon="@drawable/back"
-                app:title="Terms" />
+                app:title="@string/terms" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

@@ -29,7 +29,7 @@
                 android:background="@color/primary"
                 app:menu="@menu/top_bar_weather"
                 app:navigationIcon="@drawable/back"
-                app:title="Weather forecast" />
+                app:title="@string/weather_forecast" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

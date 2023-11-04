@@ -28,7 +28,7 @@
                 android:fitsSystemWindows="true"
                 style="@style/ToolbarTitleStyle"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:title="Confirm Hike"
+                app:title="@string/confirm_hike"
                 app:titleTextColor="@color/green6"
                 app:navigationIcon="@drawable/ic_back"/>
 
@@ -259,7 +259,7 @@
                     style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     app:icon="@drawable/ic_cancel"
                     app:iconTint="@color/green6"
                     android:textColor="@color/green6"
@@ -274,7 +274,7 @@
                     android:backgroundTint="@color/green6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Confirm"
+                    android:text="@string/confirm"
                     app:icon="@drawable/ic_confirm"
                     app:iconTint="@color/white"
                     android:textColor="@color/white"

@@ -122,7 +122,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 long id = db.hikeDao().insert(incomingHike);
                 incomingHikeImage.setHikeId((int) id);
                 db.hikeImageDao().insertImage(incomingHikeImage);
-                Toast.makeText(ConfirmActivity.this, "Successful added the Hike with ID: " + id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfirmActivity.this, getApplicationContext().getString(R.string.successful_added_the_hike_with_id) + id, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
                 intent.putExtra(SHOW_FRAGMENT, "hikeList"); // Pass a unique identifier for the fragment
