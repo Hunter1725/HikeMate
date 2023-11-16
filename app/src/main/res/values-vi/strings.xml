@@ -95,7 +95,7 @@
     <string name="create_observation">Tạo Quan Sát</string>
     <string name="observation_name">Tên Quan Sát</string>
     <string name="observation_time">Thời Gian Quan Sát</string>
-    <string name="additional_comments">Ghi chú bổ sung</string>
+    <string name="additional_comments">Ghi chú bổ sung (Tuỳ chọn)</string>
     <string name="view_all">Xem tất cả</string>
     <string name="capture">Chụp</string>
     <string name="more_details">Chi tiết</string>
@@ -142,4 +142,14 @@
     <string name="location_settings_are_not_enabled">Thiết lập vị trí không được bật.</string>
     <string name="location_permission_is_required_for_this_app_to_work">Ứng dụng cần quyền truy cập vị trí để hoạt động.</string>
     <string name="description_optional">Mô tả (Tuỳ chọn)</string>
+    <string name="delete_all">Xoá tất cả</string>
+    <string name="delete_hike">Xóa chuyến đi bộ</string>
+    <string name="are_you_sure_you_want_to_delete_hike">Bạn có chắc chắn muốn xóa chuyến đi bộ không?</string>
+    <string name="the_hike">Chuyến đi bộ </string>
+    <string name="was_removed"> đã được xóa!</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="delete_all_hikes">Xóa tất cả chuyến đi bộ</string>
+    <string name="are_you_sure_you_want_to_delete_all_hikes">Bạn có chắc chắn muốn xóa tất cả chuyến đi bộ không?</string>
+    <string name="all_hikes_have_been_deleted">Tất cả chuyến đi bộ đã được xóa!</string>
+
 </resources>

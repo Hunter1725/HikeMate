@@ -41,6 +41,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 public class HikeList extends Fragment {
     private RecyclerView detailsRecView;
@@ -49,7 +50,7 @@ public class HikeList extends Fragment {
     private HikeAdapter hikeAdapter;
     private ArrayList<Hike> hikeArrayList;
     private HikeDatabase db;
-    private Button btncreateHike;
+    private Button btncreateHike, btnDeleteAll;
     private Hike deletedHike;
     private HikeImage deletedHikeImage;
     private TextInputLayout categoryDropdown;
@@ -121,17 +122,17 @@ public class HikeList extends Fragment {
 
                 //Dialog builder
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_App_MaterialAlertDialog);
-                builder.setTitle("Delete observation");
-                builder.setMessage("Are you sure you want to delete hike " + deletedHike.getHikeName() + "?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle(R.string.delete_hike);
+                builder.setMessage(getString(R.string.are_you_sure_you_want_to_delete_hike) + deletedHike.getHikeName() + "?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Perform guest login action
                         db.hikeDao().deleteHike(deletedHike); // Delete from the database first
                         hikeArrayList.remove(position); // Then remove from the list
                         hikeAdapter.notifyItemRemoved(position);
-                        Snackbar.make(detailsRecView, "The hike " + deletedHike.getHikeName() + " was removed!", Snackbar.LENGTH_LONG)
-                                .setAction("Undo", new View.OnClickListener() {
+                        Snackbar.make(detailsRecView, getString(R.string.the_hike) + deletedHike.getHikeName() + getString(R.string.was_removed), Snackbar.LENGTH_LONG)
+                                .setAction(R.string.undo, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         db.hikeDao().insert(deletedHike); // Insert back to the database
@@ -145,7 +146,7 @@ public class HikeList extends Fragment {
                         initRecyclerview();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         initRecyclerview();
@@ -192,11 +193,13 @@ public class HikeList extends Fragment {
             imageEmpty.setVisibility(View.VISIBLE);
             detailsRecView.setVisibility(View.GONE);
             categoryDropdown.setVisibility(View.GONE);
+            btnDeleteAll.setVisibility(View.GONE);
         }else{
             txtEmpty.setVisibility(View.GONE);
             imageEmpty.setVisibility(View.GONE);
             detailsRecView.setVisibility(View.VISIBLE);
             categoryDropdown.setVisibility(View.VISIBLE);
+            btnDeleteAll.setVisibility(View.VISIBLE);
 
             detailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
             hikeAdapter = new HikeAdapter(hikeArrayList, getActivity());
@@ -221,10 +224,38 @@ public class HikeList extends Fragment {
 
 
         btncreateHike = view.findViewById(R.id.btnCreateHike);
+        btnDeleteAll = view.findViewById(R.id.btnDeleteAll);
         btncreateHike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), HikeActivity.class));
+            }
+        });
+
+        btnDeleteAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Dialog builder
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity(), R.style.ThemeOverlay_App_MaterialAlertDialog);
+                builder.setTitle(R.string.delete_all_hikes);
+                builder.setMessage(R.string.are_you_sure_you_want_to_delete_all_hikes);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Perform guest login action
+                        db.hikeDao().deleteAll();
+                        Toast.makeText(getActivity(), R.string.all_hikes_have_been_deleted, Toast.LENGTH_SHORT).show();
+                        initRecyclerview();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        initRecyclerview();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

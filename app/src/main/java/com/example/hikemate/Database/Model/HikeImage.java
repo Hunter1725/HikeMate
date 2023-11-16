@@ -30,6 +30,9 @@ public class HikeImage implements Parcelable {
         this.hikeId = hikeId;
     }
 
+    public HikeImage() {
+    }
+
     @Ignore
     public HikeImage(Bitmap data) {
         this.data = data;

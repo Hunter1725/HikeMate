@@ -45,4 +45,7 @@ public interface HikeDao {
 
     @Query("SELECT * FROM hike WHERE id = :hikeId")
     Hike getHikeById(int hikeId);
+
+    @Query("DELETE FROM hike")
+    void deleteAll();
 }

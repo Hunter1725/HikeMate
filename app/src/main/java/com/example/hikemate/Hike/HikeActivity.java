@@ -181,7 +181,7 @@ public class HikeActivity extends AppCompatActivity {
                     btnParkingUnavailable.setChecked(true);
                 }
 
-                if(hikeImage.getData() != null) {
+                if(hikeImage != null && hikeImage.getData() != null) {
                     imgHike.setVisibility(View.VISIBLE);
                     Glide.with(HikeActivity.this)
                             .asBitmap()
@@ -189,8 +189,8 @@ public class HikeActivity extends AppCompatActivity {
                             .placeholder(R.drawable.baseline_restart_alt_24)
                             .error(R.drawable.baseline_error_outline_24)
                             .into(imgHike);
+                    bitmapImageHike = hikeImage.getData();
                 }
-                bitmapImageHike = hikeImage.getData();
                 date = incomingHike.getDate();
             }
         }
@@ -600,7 +600,10 @@ public class HikeActivity extends AppCompatActivity {
                     description= edtDescription.getText().toString();
                 }
                 Hike hike = new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description);
-                HikeImage hikeImage = new HikeImage(bitmapImageHike);
+                HikeImage hikeImage = null;
+                if (bitmapImageHike != null){
+                    hikeImage = new HikeImage(bitmapImageHike);
+                }
                 intent.putExtra(HIKE_KEY, hike);
                 intent.putExtra(HIKE_IMAGE, hikeImage);
                 startActivity(intent);
