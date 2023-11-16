@@ -94,7 +94,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
                 Intent intent = new Intent(StartActivity.this, WebsiteActivity.class);
-                String message = "https://www.freeprivacypolicy.com/live/0fa5afbc-8836-4aec-8c85-d6f10530d399";
+                String message = "https://www.freeprivacypolicy.com/live/fba53041-2e38-458d-b06e-93185d3ad3f4";
                 intent.putExtra("TERMS_KEY", message);
                 startActivity(intent);
             }
@@ -104,7 +104,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
                 Intent intent = new Intent(StartActivity.this, WebsiteActivity.class);
-                String message = "https://www.freeprivacypolicy.com/live/e5a4b424-1b2a-4fee-ab8a-5b5db5ab7d96";
+                String message = "https://www.freeprivacypolicy.com/live/69dd2b30-6786-442a-922c-3d06b24ffd5e";
                 intent.putExtra("PRIVACY_KEY", message);
                 startActivity(intent);
             }

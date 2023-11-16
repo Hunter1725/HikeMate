@@ -141,4 +141,5 @@
     <string name="successful_added_the_hike_with_id">"Thêm chuyến đi thành công với ID: "</string>
     <string name="location_settings_are_not_enabled">Thiết lập vị trí không được bật.</string>
     <string name="location_permission_is_required_for_this_app_to_work">Ứng dụng cần quyền truy cập vị trí để hoạt động.</string>
+    <string name="description_optional">Mô tả (Tuỳ chọn)</string>
 </resources>

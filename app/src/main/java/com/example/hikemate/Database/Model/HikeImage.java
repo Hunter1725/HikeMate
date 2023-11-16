@@ -1,6 +1,7 @@
 package com.example.hikemate.Database.Model;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,6 +11,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import java.io.ByteArrayOutputStream;
 
 @Entity(tableName = "hike_image",
         foreignKeys = {@ForeignKey(entity = Hike.class, parentColumns = "id", childColumns = "hike_id", onDelete = ForeignKey.CASCADE)})
@@ -35,7 +38,9 @@ public class HikeImage implements Parcelable {
     @Ignore
     protected HikeImage(Parcel in) {
         id = in.readInt();
-        data = in.readParcelable(Bitmap.class.getClassLoader());
+        // Decompress the byte array to a bitmap
+        byte[] byteArray = in.createByteArray();
+        data = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         hikeId = in.readInt();
     }
 
@@ -43,7 +48,11 @@ public class HikeImage implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeParcelable(data, flags);
+        // Compress the bitmap to a byte array
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        data.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        dest.writeByteArray(byteArray);
         dest.writeInt(hikeId);
     }
 

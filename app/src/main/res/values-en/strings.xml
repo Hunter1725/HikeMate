@@ -141,5 +141,6 @@
     <string name="successful_added_the_hike_with_id">"Successful added the Hike with ID: "</string>
     <string name="location_settings_are_not_enabled">Location settings are not enabled.</string>
     <string name="location_permission_is_required_for_this_app_to_work">Location permission is required for this app to work.</string>
+    <string name="description_optional">Description (Optional)</string>
 
 </resources>

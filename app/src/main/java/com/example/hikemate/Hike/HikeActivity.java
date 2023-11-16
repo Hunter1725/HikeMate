@@ -104,6 +104,7 @@ public class HikeActivity extends AppCompatActivity {
     private MaterialDatePicker<Long> datePicker;
     private int difficulty = 1;
     private boolean parkingAvailable = true;
+    private String description = "Empty";
     private MaterialToolbar toolbarCreateHike;
     private CircularProgressIndicator progressCalculate;
     private LatLng incomingLatlng;
@@ -643,10 +644,7 @@ public class HikeActivity extends AppCompatActivity {
         }else if (edtLocation.getText().toString().isEmpty()) {
             textInputLayoutLocation.setError("Please select the location!");
             Toast.makeText(this, "Please select the location!", Toast.LENGTH_SHORT).show();
-        }else if (edtDescription.getText().toString().isEmpty()) {
-            textInputLayoutDescription.setError("Please select the description!");
-            Toast.makeText(this, "Please select the description!", Toast.LENGTH_SHORT).show();
-        } else if (bitmapImageHike == null) {
+        }else if (bitmapImageHike == null) {
             txtWarning.setVisibility(View.VISIBLE);
             Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
         }else{
@@ -654,7 +652,9 @@ public class HikeActivity extends AppCompatActivity {
             String hikeName = edtHikeName.getText().toString();
             String location = edtLocation.getText().toString();
             double length = Double.parseDouble(edtHikeLength.getText().toString());
-            String description= edtDescription.getText().toString();
+            if (!edtDescription.getText().toString().isEmpty()){
+                description = edtDescription.getText().toString();
+            }
             Hike hike = new Hike(hikeName, location, date, parkingAvailable, length, difficulty, description);
             HikeImage hikeImage = new HikeImage(bitmapImageHike);
 
