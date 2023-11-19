@@ -10,7 +10,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.hikemate.NetworkUtils;
+import com.example.hikemate.Other.NetworkUtils;
 import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 

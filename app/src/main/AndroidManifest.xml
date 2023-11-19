@@ -25,7 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SearchHike"
+            android:name=".Hike.SearchHike"
             android:exported="false" />
         <activity
             android:name=".Observation.ObservationList"
@@ -49,25 +49,25 @@
             android:name=".Observation.ObservationActivity"
             android:exported="false" />
         <activity
-            android:name=".SkillDetail"
+            android:name=".HikeKnowledge.SkillDetail"
             android:exported="false" />
         <activity
-            android:name=".PlantDetail"
+            android:name=".HikeKnowledge.PlantDetail"
             android:exported="false" />
         <activity
-            android:name=".AnimalDetail"
+            android:name=".HikeKnowledge.AnimalDetail"
             android:exported="false" />
         <activity
-            android:name=".SkillList"
+            android:name=".HikeKnowledge.SkillList"
             android:exported="false" />
         <activity
-            android:name=".PlantList"
+            android:name=".HikeKnowledge.PlantList"
             android:exported="false" />
         <activity
-            android:name=".AnimalList"
+            android:name=".HikeKnowledge.AnimalList"
             android:exported="false" />
         <activity
-            android:name=".LibraryActivity"
+            android:name=".HikeKnowledge.LibraryActivity"
             android:exported="false" />
         <activity
             android:name=".ChatBot.ChatActivity"
@@ -96,10 +96,10 @@
             android:name=".Hike.HikeActivity"
             android:exported="true" />
         <activity
-            android:name=".GettingStartedActivity"
+            android:name=".Starting.GettingStartedActivity"
             android:exported="true" />
         <activity
-            android:name=".StartActivity"
+            android:name=".Starting.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

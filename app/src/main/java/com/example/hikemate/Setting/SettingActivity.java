@@ -11,20 +11,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.hikemate.ContextWrapper;
+import com.example.hikemate.Other.ContextWrapper;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Setting;
 import com.example.hikemate.Database.Model.Weather;
-import com.example.hikemate.Hike.HikeActivity;
 import com.example.hikemate.MainActivity;
 import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;

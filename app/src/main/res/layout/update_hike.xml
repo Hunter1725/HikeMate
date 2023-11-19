@@ -263,7 +263,7 @@
                     android:id="@+id/btnOpenMap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Open Map"
+                    android:text="@string/open_map"
                     android:textColor="@color/green6"
                     android:layout_marginEnd="10dp"
                     android:textSize="18sp"
@@ -328,7 +328,7 @@
                     android:id="@+id/textDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/description"
+                    android:text="@string/description_optional"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -413,14 +413,35 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/radioParkingAvailable"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/recyclerViewObservation"
+
+                <LinearLayout
+                    android:id="@+id/recLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textObservation"
-                    />
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/recyclerViewObservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/no_observations_have_been_added_yet"
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btnCreateObservation"
@@ -428,12 +449,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Create Observation"
+                    android:text="@string/create_observation"
                     android:textColor="@color/green6"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:iconTint="@color/green4" app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewObservation" />
+                    app:layout_constraintTop_toBottomOf="@+id/recLayout" />
 
                 <Button
                     android:id="@+id/btnViewObservation"

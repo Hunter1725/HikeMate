@@ -32,6 +32,7 @@ import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.Observation;
 import com.example.hikemate.Database.Model.ObservationImage;
+import com.example.hikemate.Hike.HikeDetail;
 import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -96,17 +97,17 @@ public class ObservationList extends AppCompatActivity {
 
                 //Dialog builder
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(ObservationList.this, R.style.ThemeOverlay_App_MaterialAlertDialog);
-                builder.setTitle("Delete person");
-                builder.setMessage("Are you sure you want to delete person " + deletedObservation.getName() + "?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle(R.string.delete_observation);
+                builder.setMessage(getString(R.string.are_you_sure_you_want_to_delete_observation) + deletedObservation.getName() + "?");
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Perform guest login action
                         db.observationDao().deleteObservation(deletedObservation); // Delete from the database first
                         observationArrayList.remove(position); // Then remove from the list
                         observationAdapter.notifyItemRemoved(position);
-                        Snackbar.make(detailsRecView, "The person " + deletedObservation.getName() + " was removed!", Snackbar.LENGTH_LONG)
-                                .setAction("Undo", new View.OnClickListener() {
+                        Snackbar.make(detailsRecView, getString(R.string.the_observation) + deletedObservation.getName() + getString(R.string.was_removed), Snackbar.LENGTH_LONG)
+                                .setAction(R.string.undo, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         db.observationDao().insert(deletedObservation); // Insert back to the database
@@ -120,7 +121,7 @@ public class ObservationList extends AppCompatActivity {
                         initRecyclerview();
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         initRecyclerview();
@@ -194,7 +195,9 @@ public class ObservationList extends AppCompatActivity {
         btnCreateObservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ObservationList.this, ObservationActivity.class));
+                Intent intent = new Intent(ObservationList.this, ObservationActivity.class);
+                intent.putExtra(HIKE_ID, incomingHike);
+                startActivity(intent);
             }
         });
     }

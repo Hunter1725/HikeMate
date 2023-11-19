@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.Other;
 import android.content.Context;
 import android.content.res.Configuration;
 

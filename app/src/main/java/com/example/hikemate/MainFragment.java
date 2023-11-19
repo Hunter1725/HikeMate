@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +21,8 @@ import com.example.hikemate.Database.Model.Hike;
 import com.example.hikemate.Database.Model.Weather;
 import com.example.hikemate.Hike.HikeActivity;
 import com.example.hikemate.Hike.HikeAdapter;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.Other.NetworkUtils;
 import com.example.hikemate.WeatherForecast.CalendarUtils;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.google.android.material.card.MaterialCardView;

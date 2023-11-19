@@ -17,10 +17,10 @@ import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hikemate.ContextWrapper;
+import com.example.hikemate.Other.ContextWrapper;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Message;
-import com.example.hikemate.NetworkUtils;
+import com.example.hikemate.Other.NetworkUtils;
 import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 

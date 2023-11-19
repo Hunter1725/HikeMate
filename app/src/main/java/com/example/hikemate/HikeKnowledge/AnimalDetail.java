@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hikemate.Database.Model.Animal;
-import com.example.hikemate.Maps.MapsActivity;
-import com.example.hikemate.WeatherForecast.WeatherActivity;
-import com.google.android.gms.location.FusedLocationProviderClient;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class AnimalDetail extends AppCompatActivity {

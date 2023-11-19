@@ -19,7 +19,7 @@ public interface HikeDao {
     @Update
     void update(Hike hike);
 
-    @Query("SELECT * FROM hike WHERE hikeName LIKE :name OR location LIKE :name OR description LIKE :name LIMIT 7")
+    @Query("SELECT * FROM hike WHERE hikeName LIKE :name OR location LIKE :name OR length LIKE :name LIMIT 7")
     List<Hike> searchHike(String name);
 
     @Query("SELECT * FROM hike")

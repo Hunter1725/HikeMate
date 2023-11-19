@@ -151,5 +151,10 @@
     <string name="delete_all_hikes">Xóa tất cả chuyến đi bộ</string>
     <string name="are_you_sure_you_want_to_delete_all_hikes">Bạn có chắc chắn muốn xóa tất cả chuyến đi bộ không?</string>
     <string name="all_hikes_have_been_deleted">Tất cả chuyến đi bộ đã được xóa!</string>
-
+    <string name="comments">Ghi chú</string>
+    <string name="no_observations_have_been_added_yet">Chưa có quan sát nào được thêm vào!</string>
+    <string name="delete_observation">Xóa quan sát</string>
+    <string name="are_you_sure_you_want_to_delete_observation">Bạn có chắc chắn muốn xóa quan sát không?</string>
+    <string name="the_observation">Quan sát </string>
+    <string name="the_image_is_to_large_please_select_another">Hình ảnh quá lớn! Vui lòng chọn cái khác</string>
 </resources>

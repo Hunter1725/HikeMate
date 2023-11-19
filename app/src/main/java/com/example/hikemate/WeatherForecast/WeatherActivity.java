@@ -29,11 +29,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hikemate.ContextWrapper;
+import com.example.hikemate.Other.ContextWrapper;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Weather;
-import com.example.hikemate.GetCurrentLanguage;
-import com.example.hikemate.Hike.HikeActivity;
+import com.example.hikemate.Other.GetCurrentLanguage;
 import com.example.hikemate.MainActivity;
 import com.example.hikemate.Maps.MapsActivity;
 import com.example.hikemate.R;
@@ -199,7 +198,7 @@ public class WeatherActivity extends AppCompatActivity {
                     tipRecommend = getString(R.string.go_hike);
                     txtDayRecommend.setText(tipRecommend);
                 } else {
-                    tipRecommend = getString(R.string.go_hike);
+                    tipRecommend = getString(R.string.stay_at_home);
                     txtDayRecommend.setText(tipRecommend);
                 }
                 break;
@@ -290,11 +289,11 @@ public class WeatherActivity extends AppCompatActivity {
                     weatherRecommend = getString(R.string.go_hike);
                     txtWeatherRecommend.setText(weatherRecommend);
                 } else {
-                    weatherRecommend = getString(R.string.go_hike);
+                    weatherRecommend = getString(R.string.stay_at_home);
                     txtWeatherRecommend.setText(weatherRecommend);
                 }
             } else {
-                weatherRecommend = getString(R.string.go_hike);
+                weatherRecommend = getString(R.string.stay_at_home);
                 txtWeatherRecommend.setText(weatherRecommend);
             }
 

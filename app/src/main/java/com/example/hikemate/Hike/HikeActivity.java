@@ -375,7 +375,7 @@ public class HikeActivity extends AppCompatActivity {
                 } else {
                     // Image size exceeds the threshold, handle accordingly (e.g., show an error message)
                     Log.d("PhotoPicker", "Selected image size exceeds the threshold.");
-                    Toast.makeText(this, "The image is to large! Please select another!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.the_image_is_to_large_please_select_another, Toast.LENGTH_LONG).show();
                 }
             } else {
                 Log.d("PhotoPicker", "No media selected");
@@ -665,13 +665,6 @@ public class HikeActivity extends AppCompatActivity {
             intent.putExtra(HIKE_KEY, hike);
             intent.putExtra(HIKE_IMAGE, hikeImage);
             startActivity(intent);
-//            edtHikeName.setText("");
-//            edtLocation.setText("");
-//            edtHikeLength.setText("");
-//            edtDoH.setText("");
-//            edtDescription.setText("");
-//            bitmapImageHike=null;
-//            imgHike.setVisibility(View.GONE);
         }
 
     }

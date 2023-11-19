@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.Hike;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Hike;
-import com.example.hikemate.Hike.HikeAdapter;
+import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

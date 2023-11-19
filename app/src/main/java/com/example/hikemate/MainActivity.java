@@ -1,7 +1,5 @@
 package com.example.hikemate;
 
-import static com.example.hikemate.WeatherForecast.WeatherActivity.LOCATION_PERMISSION_REQUEST_CODE;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,22 +22,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Hike.HikeList;
-import com.example.hikemate.Maps.MapsActivity;
+import com.example.hikemate.Hike.SearchHike;
+import com.example.hikemate.HikeKnowledge.LibraryActivity;
+import com.example.hikemate.Other.ContextWrapper;
 import com.example.hikemate.Setting.SettingActivity;
 import com.example.hikemate.Setting.WebsiteActivity;
 import com.example.hikemate.WeatherForecast.WeatherActivity;
 import com.example.hikemate.Hike.HikeActivity;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.Priority;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;

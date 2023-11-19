@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.Starting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
@@ -16,10 +16,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.hikemate.ChatBot.ChatActivity;
 import com.example.hikemate.Database.HikeDatabase;
 import com.example.hikemate.Database.Model.Setting;
-import com.example.hikemate.Hike.HikeActivity;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.R;
 import com.example.hikemate.Setting.WebsiteActivity;
 import com.google.android.material.card.MaterialCardView;
 

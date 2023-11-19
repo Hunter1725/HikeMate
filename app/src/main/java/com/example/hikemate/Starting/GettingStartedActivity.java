@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.Starting;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.hikemate.Other.ContextWrapper;
 import com.example.hikemate.Database.HikeDatabase;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

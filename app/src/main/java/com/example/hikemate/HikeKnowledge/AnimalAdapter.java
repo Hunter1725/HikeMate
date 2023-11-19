@@ -1,7 +1,6 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
-import static com.example.hikemate.PlantDetail.PLANT_KEY;
-import static com.example.hikemate.SkillDetail.SKILL_KEY;
+import static com.example.hikemate.HikeKnowledge.AnimalDetail.ANIMAL_KEY;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,45 +13,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hikemate.Database.Model.Animal;
-import com.example.hikemate.Database.Model.Skill;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
-public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> {
-    private List<Skill> itemList;
+public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
+    private List<Animal> itemList;
     private Context context;
 
-    public SkillAdapter(List<Skill> itemList, Context context) {
+    public AnimalAdapter(List<Animal> itemList, Context context) {
         this.itemList = itemList;
         this.context = context;
     }
 
-    public SkillAdapter(Context context) {
+    public AnimalAdapter(Context context) {
         this.context = context;
     }
-
-    private OnItemClickListener itemClickListener;
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(SkillAdapter.OnItemClickListener listener) {
-        itemClickListener = listener;
-    }
-
+    //    private OnItemClickListener itemClickListener;
+//
+//    public interface OnItemClickListener {
+//        void onItemClick(int position);
+//    }
+//
+//    public void setOnItemClickListener(OnItemClickListener listener) {
+//        itemClickListener = listener;
+//    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.skills, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.animals, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SkillAdapter.ViewHolder holder, int position) {
-        Skill item = itemList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Animal item = itemList.get(position);
 
         Glide.with(context)
                 .load(item.getImageUrl())
@@ -70,14 +68,14 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SkillDetail.class);
-                intent.putExtra(SKILL_KEY, item);
+                Intent intent = new Intent(context, AnimalDetail.class);
+                intent.putExtra(ANIMAL_KEY, item);
                 context.startActivity(intent);
             }
         });
     }
 
-    public void setItemList(List<Skill> itemList) {
+    public void setItemList(List<Animal> itemList) {
         this.itemList = itemList;
         notifyDataSetChanged();
     }

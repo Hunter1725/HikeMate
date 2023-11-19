@@ -81,7 +81,7 @@ public class HikeDetail extends AppCompatActivity {
     private RadioButton btnEasy, btnModerate, btnDifficult, btnParkingAvailable, btnParkingUnavailable;
     private ShapeableImageView imageHike, iconCamera;
     private Button btnSelectImage, btnCancel, btnSave;
-    private TextView txtHikeName, btnOpenMap;
+    private TextView txtHikeName, btnOpenMap, txtEmpty;
     private Button  btnCreateObservation, btnViewObservation;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private ActivityResultLauncher<CropImageContractOptions> cropImage;
@@ -431,9 +431,6 @@ public class HikeDetail extends AppCompatActivity {
         }else if (edtLocation.getText().toString().isEmpty()) {
             textInputLayoutLocation.setError("Please select the location!");
             Toast.makeText(this, "Please select the location!", Toast.LENGTH_SHORT).show();
-        }else if (edtDescription.getText().toString().isEmpty()) {
-            textInputLayoutDescription.setError("Please select the description!");
-            Toast.makeText(this, "Please select the description!", Toast.LENGTH_SHORT).show();
         }else{
             String hikeName = edtHikeName.getText().toString();
             String location = edtLocation.getText().toString();
@@ -497,9 +494,16 @@ public class HikeDetail extends AppCompatActivity {
                 date = incomingHike.getDate();
                 //init RecycleViewObservation
                 observationList = (ArrayList<Observation>) db.observationDao().getObservationsForHike(incomingHike.getId());
-                ObservationItem observationItem = new ObservationItem(observationList, HikeDetail.this);
-                recyclerViewObservation.setAdapter(observationItem);
-                recyclerViewObservation.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));
+                if(observationList.isEmpty()){
+                    txtEmpty.setVisibility(View.VISIBLE);
+                    recyclerViewObservation.setVisibility(View.GONE);
+                } else {
+                    txtEmpty.setVisibility(View.GONE);
+                    recyclerViewObservation.setVisibility(View.VISIBLE);
+                    ObservationItem observationItem = new ObservationItem(observationList, HikeDetail.this);
+                    recyclerViewObservation.setAdapter(observationItem);
+                    recyclerViewObservation.setLayoutManager(new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false));
+                }
             }
 
             //Get Longitude and latitude
@@ -572,6 +576,7 @@ public class HikeDetail extends AppCompatActivity {
         recyclerViewObservation = findViewById(R.id.recyclerViewObservation);
 
         txtWarning = findViewById(R.id.txtWarning);
+        txtEmpty = findViewById(R.id.txtEmpty);
         toolbarHike = findViewById(R.id.toolbarHike);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);

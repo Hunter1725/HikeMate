@@ -161,27 +161,11 @@ public class ObservationActivity extends AppCompatActivity {
     }
 
     private void initializeDatePicker() {
-        // Get today's date in milliseconds
-        long todayInMillis = MaterialDatePicker.todayInUtcMilliseconds();
-
-        // Set a custom maximum date (e.g., 7 days from today)
-        long customMaxDateInMillis = todayInMillis - (7 * 24 * 60 * 60 * 1000);
-
-        // Create a CalendarConstraints.Builder
-        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
-
-        // Set a DateValidator using DateValidatorPointBackward.now()
-        constraintsBuilder.setValidator(DateValidatorPointBackward.before(customMaxDateInMillis));
-        constraintsBuilder.setEnd(todayInMillis);
-
-        // Build the CalendarConstraints
-        CalendarConstraints constraints = constraintsBuilder.build();
 
         // Initialize the date picker
         datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .setCalendarConstraints(constraints)
                 .setTheme(R.style.ThemeOverlay_App_DatePicker)
                 .build();
 

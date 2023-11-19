@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.hikemate.HikeKnowledge.AnimalList;
+import com.example.hikemate.HikeKnowledge.PlantList;
+import com.example.hikemate.HikeKnowledge.SkillList;
+import com.example.hikemate.R;
 import com.google.android.material.card.MaterialCardView;
 
 public class LibraryActivity extends Fragment {
@@ -46,7 +50,7 @@ public class LibraryActivity extends Fragment {
         cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),PlantList.class);
+                Intent intent = new Intent(getActivity(), PlantList.class);
                 startActivity(intent);
             }
         });
@@ -61,7 +65,7 @@ public class LibraryActivity extends Fragment {
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),SkillList.class);
+                Intent intent = new Intent(getActivity(), SkillList.class);
                 startActivity(intent);
             }
         });

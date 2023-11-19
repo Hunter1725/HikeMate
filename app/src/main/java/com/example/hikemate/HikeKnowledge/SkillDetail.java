@@ -1,4 +1,4 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.hikemate.Database.Model.Plant;
 import com.example.hikemate.Database.Model.Skill;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class SkillDetail extends AppCompatActivity {

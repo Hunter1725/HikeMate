@@ -1,6 +1,6 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
-import static com.example.hikemate.PlantDetail.PLANT_KEY;
+import static com.example.hikemate.HikeKnowledge.PlantDetail.PLANT_KEY;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hikemate.Database.Model.Plant;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;

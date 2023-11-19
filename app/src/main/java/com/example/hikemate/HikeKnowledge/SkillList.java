@@ -1,7 +1,11 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
@@ -9,15 +13,11 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.KeyEvent;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.MemoryCategory;
 import com.example.hikemate.Database.HikeDatabase;
-import com.example.hikemate.Database.Model.Animal;
+import com.example.hikemate.Database.Model.Skill;
+import com.example.hikemate.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.search.SearchBar;
 import com.google.android.material.search.SearchView;
@@ -25,17 +25,15 @@ import com.google.android.material.search.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimalList extends AppCompatActivity{
-
+public class SkillList extends AppCompatActivity {
     private NestedScrollView nestedScrollView;
     private TextView txtEmpty;
     private RecyclerView recyclerView, resultRecView;
     private SearchBar searchBar;
     private SearchView searchView;
-
-    private AnimalAdapter animalAdapter, animalAdapter2;
-    private List<Animal> animalList;
-    private List<Animal> animalList2 = new ArrayList<>();
+    private SkillAdapter skillAdapter, skillAdapter2;
+    private List<Skill> skillList;
+    private List<Skill> skillList2 = new ArrayList<>();
     private FloatingActionButton fabScrollToTop;
     private HikeDatabase db;
 
@@ -43,25 +41,23 @@ public class AnimalList extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        setContentView(R.layout.activity_animal_list);
+        setContentView(R.layout.activity_survival_skills);
         getSupportActionBar().hide();
         Glide.get(getApplicationContext()).setMemoryCategory(MemoryCategory.HIGH);
         initView();
-
         initListener();
 
-        db = HikeDatabase.getInstance(AnimalList.this);
-        animalList = db.animalDao().getAnimal();
+        db = HikeDatabase.getInstance(SkillList.this);
+        skillList = db.skillDao().getSkill();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        animalAdapter = new AnimalAdapter(this);
-        animalAdapter.setItemList(animalList);
-        recyclerView.setAdapter(animalAdapter);
+        skillAdapter = new SkillAdapter(this);
+        skillAdapter.setItemList(skillList);
+        recyclerView.setAdapter(skillAdapter);
 
-        //adapter for search animal 2
         resultRecView.setLayoutManager(new LinearLayoutManager(this));
-        animalAdapter2 = new AnimalAdapter(animalList2,this);
-        resultRecView.setAdapter(animalAdapter2);
+        skillAdapter2 = new SkillAdapter(skillList2,this);
+        resultRecView.setAdapter(skillAdapter2);
 
         fabScrollToTop.hide();
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -90,7 +86,6 @@ public class AnimalList extends AppCompatActivity{
                 nestedScrollView.smoothScrollTo(0, 0);
             }
         });
-
     }
 
     private void initListener() {
@@ -115,10 +110,10 @@ public class AnimalList extends AppCompatActivity{
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 String name = "%" + String.valueOf(searchView.getText()) + "%";
-                animalList2 = db.animalDao().searchAnimal(name);
-                if(animalList2.size()!=0){
+                skillList2 = db.skillDao().searchSkill(name);
+                if(skillList2.size()!=0){
                     resultRecView.setVisibility(View.VISIBLE);
-                    animalAdapter2.setItemList(animalList2);
+                    skillAdapter2.setItemList(skillList2);
                     txtEmpty.setVisibility(View.GONE);
                 }
                 else {
@@ -131,13 +126,13 @@ public class AnimalList extends AppCompatActivity{
     }
 
     private void initView() {
-        recyclerView = findViewById(R.id.AnimalsRecyclerView);
+        recyclerView = findViewById(R.id.SurvivalSkillsRecyclerView);
         fabScrollToTop = findViewById(R.id.fabScrollToTop);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         txtEmpty = findViewById(R.id.txtEmpty);
         resultRecView = findViewById(R.id.resultRecView);
         searchBar = findViewById(R.id.search_bar);
         searchView = findViewById(R.id.search_view);
-
     }
+
 }

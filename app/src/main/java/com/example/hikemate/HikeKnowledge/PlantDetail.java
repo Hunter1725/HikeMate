@@ -1,11 +1,10 @@
-package com.example.hikemate;
+package com.example.hikemate.HikeKnowledge;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.WindowCompat;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.hikemate.Database.Model.Animal;
 import com.example.hikemate.Database.Model.Plant;
+import com.example.hikemate.Other.GetCurrentLanguage;
+import com.example.hikemate.MainActivity;
+import com.example.hikemate.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class PlantDetail extends AppCompatActivity {
